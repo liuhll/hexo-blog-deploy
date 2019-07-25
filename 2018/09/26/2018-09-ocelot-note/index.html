@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="微服务,网关,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="简介Ocelot是一个用.NET Core实现并且开源的API网关，它功能强大，包括了：路由、请求聚合、服务发现、认证、鉴权、限流熔断、并内置了 负载均衡器 与 Service Fabric 、Butterfly Tracing 集成。 本质上,Ocelot是一堆的asp.net core middleware 组成的一个管道。当它拿到请求之后会用一个request builder来构造一个Htt">
+<meta name="keywords" content="微服务,网关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ocelot笔记">
+<meta property="og:url" content="https://liuhll.github.io/2018/09/26/2018-09-ocelot-note/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="简介Ocelot是一个用.NET Core实现并且开源的API网关，它功能强大，包括了：路由、请求聚合、服务发现、认证、鉴权、限流熔断、并内置了 负载均衡器 与 Service Fabric 、Butterfly Tracing 集成。 本质上,Ocelot是一堆的asp.net core middleware 组成的一个管道。当它拿到请求之后会用一个request builder来构造一个Htt">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.johnwu.cc/images/pasted-114.gif">
+<meta property="og:image" content="http://www.jessetalk.cn/wp-content/uploads/2018/03/APISM-768x349.png">
+<meta property="og:image" content="https://ocelot.readthedocs.io/en/latest/_images/OcelotBasic.jpg">
+<meta property="og:image" content="https://ocelot.readthedocs.io/en/latest/_images/OcelotIndentityServer.jpg">
+<meta property="og:image" content="https://ocelot.readthedocs.io/en/latest/_images/OcelotMultipleInstances.jpg">
+<meta property="og:image" content="https://ocelot.readthedocs.io/en/latest/_images/OcelotMultipleInstancesConsul.jpg">
+<meta property="og:updated_time" content="2019-07-22T03:41:41.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ocelot笔记">
+<meta name="twitter:description" content="简介Ocelot是一个用.NET Core实现并且开源的API网关，它功能强大，包括了：路由、请求聚合、服务发现、认证、鉴权、限流熔断、并内置了 负载均衡器 与 Service Fabric 、Butterfly Tracing 集成。 本质上,Ocelot是一堆的asp.net core middleware 组成的一个管道。当它拿到请求之后会用一个request builder来构造一个Htt">
+<meta name="twitter:image" content="https://blog.johnwu.cc/images/pasted-114.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2018/09/26/2018-09-ocelot-note/">
+
+
+
+
+
+  <title>Ocelot笔记 | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2018/09/26/2018-09-ocelot-note/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Ocelot笔记</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-26T21:56:31+08:00">
+                2018-09-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-22T11:41:41+08:00">
+                2019-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog-deploy/categories/微服务/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Ocelot是一个用.NET Core实现并且开源的API网关，它功能强大，包括了：<strong>路由</strong>、<strong>请求聚合</strong>、<strong>服务发现</strong>、<strong>认证</strong>、<strong>鉴权</strong>、<strong>限流熔断</strong>、并内置了 <strong>负载均衡器</strong> 与 <strong>Service Fabric</strong> 、<strong>Butterfly Tracing</strong> 集成。</p>
+<p>本质上,Ocelot是一堆的asp.net core <a href="https://github.com/TomPallister/Ocelot/blob/develop/src/Ocelot/Middleware/OcelotMiddlewareExtensions.cs" target="_blank" rel="noopener">middleware</a> 组成的一个管道。当它拿到请求之后会用一个<code>request builder</code>来构造一个<code>HttpRequestMessage</code>发到下游的真实服务器，等下游的服务返回<code>response</code>之后再由一个<code>middleware</code>将它返回的<code>HttpResponseMessage</code>映射到<code>HttpResponse</code>上。</p>
+<ul>
+<li>asp.net core中间件示意图</li>
+</ul>
+<p><img src="https://blog.johnwu.cc/images/pasted-114.gif" alt="moddleware"></p>
+<h3 id="API网关"><a href="#API网关" class="headerlink" title="API网关"></a>API网关</h3><p><strong>API网关</strong>—— 它是系统的暴露在外部的一个访问入口。这个有点像代理访问，就像一个公司的门卫承担着寻址、限制进入、安全检查、位置引导、等等功能。</p>
+<p><img src="http://www.jessetalk.cn/wp-content/uploads/2018/03/APISM-768x349.png" alt="API网关路径"></p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>配置文件中的<code>ReRoutes</code>可以实现由上游到下游路由的转发。</p>
+<h3 id="上游路由"><a href="#上游路由" class="headerlink" title="上游路由"></a>上游路由</h3><p>API网关匹配到的请求路由地址。</p>
+<h3 id="下游路由"><a href="#下游路由" class="headerlink" title="下游路由"></a>下游路由</h3><p>API网关转发到真实服务主机的路由地址。</p>
+<h3 id="路由负载均衡"><a href="#路由负载均衡" class="headerlink" title="路由负载均衡"></a>路由负载均衡</h3><p>当下游服务有多个结点的时候，我们可以在<code>DownstreamHostAndPorts</code>中进行配置:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"DownstreamPathTemplate"</span>: <span class="string">"/api/posts/&#123;postId&#125;"</span>,</span><br><span class="line">    <span class="attr">"DownstreamScheme"</span>: <span class="string">"https"</span>,</span><br><span class="line">    <span class="attr">"DownstreamHostAndPorts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"Host"</span>: <span class="string">"10.0.1.10"</span>,</span><br><span class="line">                <span class="attr">"Port"</span>: <span class="number">5000</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"Host"</span>: <span class="string">"10.0.1.11"</span>,</span><br><span class="line">                <span class="attr">"Port"</span>: <span class="number">5000</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">    <span class="attr">"UpstreamPathTemplate"</span>: <span class="string">"/posts/&#123;postId&#125;"</span>,</span><br><span class="line">    <span class="attr">"LoadBalancer"</span>: <span class="string">"LeastConnection"</span>,</span><br><span class="line">    <span class="attr">"UpstreamHttpMethod"</span>: [ <span class="string">"Put"</span>, <span class="string">"Delete"</span> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><p><img src="https://ocelot.readthedocs.io/en/latest/_images/OcelotBasic.jpg" alt="基本使用"></p>
+<h3 id="与-IdentityServer-集成"><a href="#与-IdentityServer-集成" class="headerlink" title="与 IdentityServer 集成"></a>与 <code>IdentityServer</code> 集成</h3><p>当我们涉及到认证和鉴权的时候，我们可以跟<code>Identity Server</code>进行结合。当网关需要请求认证信息的时候会与<code>Identity Server</code>服务器进行交互来完成</p>
+<p><img src="https://ocelot.readthedocs.io/en/latest/_images/OcelotIndentityServer.jpg" alt="与indentityserver集成"></p>
+<h3 id="网关集群"><a href="#网关集群" class="headerlink" title="网关集群"></a>网关集群</h3><p>只有一个网关是很危险的，也就是我们通常所讲的单点，只要它挂了，所有的服务全挂。这显然无法达到高可用，所以我们也可以部署多台网关。<br><img src="https://ocelot.readthedocs.io/en/latest/_images/OcelotMultipleInstances.jpg" alt="集群"></p>
+<h3 id="Consul服务发现"><a href="#Consul服务发现" class="headerlink" title="Consul服务发现"></a>Consul服务发现</h3><p>在Ocelot已经支持简单的负载功能，也就是当下游服务存在多个结点的时候，Ocelot能够承担起负载均衡的作用。但是它不提供健康检查，服务的注册也只能通过手动在配置文件里面添加完成。这不够灵活并且在一定程度下会有风险。这个时候我们就可以用Consul来做服务发现，它能与Ocelot完美结合。</p>
+<p><img src="https://ocelot.readthedocs.io/en/latest/_images/OcelotMultipleInstancesConsul.jpg" alt="Consul服务发现"></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>Ocelot有两个配置块。一个<code>ReRoutes</code>数组和一个<code>GlobalConfiguration</code>。</p>
+<ul>
+<li><code>ReRoutes</code>配置块是一些告诉Ocelot如何处理上游请求的对象</li>
+<li><code>Globalconfiguration</code>有些奇特，可以覆盖<code>ReRoute</code>节点的特殊设置。如果你不想管理大量的<code>ReRoute</code>特定的设置的话，这将很有用。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "ReRoutes": [],</span><br><span class="line">    "GlobalConfiguration": &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ReRoutes</code>路由配置例子</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          "DownstreamPathTemplate": "/",</span><br><span class="line">          "UpstreamPathTemplate": "/",</span><br><span class="line">          "UpstreamHttpMethod": [</span><br><span class="line">              "Get"</span><br><span class="line">          ],</span><br><span class="line">          "AddHeadersToRequest": &#123;&#125;,</span><br><span class="line">          "AddClaimsToRequest": &#123;&#125;,</span><br><span class="line">          "RouteClaimsRequirement": &#123;&#125;,</span><br><span class="line">          "AddQueriesToRequest": &#123;&#125;,</span><br><span class="line">          "RequestIdKey": "",</span><br><span class="line">          "FileCacheOptions": &#123;</span><br><span class="line">              "TtlSeconds": 0,</span><br><span class="line">              "Region": ""</span><br><span class="line">          &#125;,</span><br><span class="line">          "ReRouteIsCaseSensitive": false,</span><br><span class="line">          "ServiceName": "",</span><br><span class="line">          "DownstreamScheme": "http",</span><br><span class="line">          "DownstreamHostAndPorts": [</span><br><span class="line">              &#123;</span><br><span class="line">                  "Host": "localhost",</span><br><span class="line">                  "Port": 51876,</span><br><span class="line">              &#125;</span><br><span class="line">          ],</span><br><span class="line">          "QoSOptions": &#123;</span><br><span class="line">              "ExceptionsAllowedBeforeBreaking": 0,</span><br><span class="line">              "DurationOfBreak": 0,</span><br><span class="line">              "TimeoutValue": 0</span><br><span class="line">          &#125;,</span><br><span class="line">          "LoadBalancer": "",</span><br><span class="line">          "RateLimitOptions": &#123;</span><br><span class="line">              "ClientWhitelist": [],</span><br><span class="line">              "EnableRateLimiting": false,</span><br><span class="line">              "Period": "",</span><br><span class="line">              "PeriodTimespan": 0,</span><br><span class="line">              "Limit": 0</span><br><span class="line">          &#125;,</span><br><span class="line">          "AuthenticationOptions": &#123;</span><br><span class="line">              "AuthenticationProviderKey": "",</span><br><span class="line">              "AllowedScopes": []</span><br><span class="line">          &#125;,</span><br><span class="line">          "HttpHandlerOptions": &#123;</span><br><span class="line">              "AllowAutoRedirect": true,</span><br><span class="line">              "UseCookieContainer": true,</span><br><span class="line">              "UseTracing": true</span><br><span class="line">          &#125;,</span><br><span class="line">          "UseServiceDiscovery": false,</span><br><span class="line">          "DangerousAcceptAnyServerCertificateValidator": false</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="请求聚合"><a href="#请求聚合" class="headerlink" title="请求聚合"></a>请求聚合</h2><h3 id="什么是聚合路由"><a href="#什么是聚合路由" class="headerlink" title="什么是聚合路由?"></a>什么是聚合路由?</h3><p>把多个正常的ReRoutes打包并映射到一个对象来对客户端的请求进行响应。</p>
+<p>比如，你请求订单信息，订单中又包含商品信息，这里就设计到两个微服务，一个是商品服务，一个是订单服务。如果不运用聚合路由的话，对于一个订单信息，客户端可能需要请求两次服务端。实际上这会造成服务端额外的开销。这时候有了聚合路由后，你只需要请求一次聚合路由，然后聚合路由会合并订单跟商品的结果都一个对象中，并把这个对象响应给客户端。使用Ocelot的此特性可以让你很容易的实现前后端分离的架构。</p>
+<p>为了实现Ocelot的请求功能，你需要在<code>ocelot.json</code>中进行如下的配置。这里我们指定了了两个正常的<code>ReRoutes</code>,然后给每个<code>ReRoute</code>设置一个<code>Key</code>属性。最后我们再<code>Aggregates</code>节点中的<code>ReRouteKeys</code>属性中加入我们刚刚指定的两个<code>Key</code>从而组成了两个<code>ReRoutes</code>的聚合。当然我们还需要设置<code>UpstreamPathTemplate</code>匹配上游的用户请求，它的工作方式与正常的<code>ReRoute</code>类似。</p>
+<blockquote>
+<p><strong>Notes:</strong> 不要把Aggregates中UpstreamPathTemplate设置的跟ReRoutes中的UpstreamPathTemplate设置成一样</p>
+</blockquote>
+<p>例如:</p>
+<ol>
+<li>存在两个微服务: <code>OrderApi</code> 和 <code>GoodApi</code></li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//GoodApi项目中</span></span><br><span class="line">    [<span class="meta">Route(<span class="meta-string">"api/[controller]"</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GoodController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// GET api/Good/5</span></span><br><span class="line">        [<span class="meta">HttpGet(<span class="meta-string">"&#123;id&#125;"</span>)</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> ActionResult&lt;<span class="keyword">string</span>&gt; <span class="title">Get</span>(<span class="params"><span class="keyword">int</span> id</span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> item = <span class="keyword">new</span> Goods</span><br><span class="line">            &#123;</span><br><span class="line">                Id = id,</span><br><span class="line">                Content = <span class="string">$"<span class="subst">&#123;id&#125;</span>的关联的商品明细"</span>,</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">return</span> JsonConvert.SerializeObject(item);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="comment">//OrderApi项目中  </span></span><br><span class="line">    [<span class="meta">Route(<span class="meta-string">"api/[controller]"</span>)</span>]</span><br><span class="line">    [<span class="meta">ApiController</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OrderController</span> : <span class="title">ControllerBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// GET api/Order/5</span></span><br><span class="line">        [<span class="meta">HttpGet(<span class="meta-string">"&#123;id&#125;"</span>)</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> ActionResult&lt;<span class="keyword">string</span>&gt; <span class="title">Get</span>(<span class="params"><span class="keyword">int</span> id</span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> item = <span class="keyword">new</span> Orders &#123;</span><br><span class="line">                Id=id,</span><br><span class="line">                Content=<span class="string">$"<span class="subst">&#123;id&#125;</span>的订单明细"</span>,</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">return</span> JsonConvert.SerializeObject(item);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>分别在<code>ocelot.good.json</code>以及<code>ocelot.order.json</code>中新增一个路由，并给出<code>Keys</code></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ocelot.good.json</span></span><br><span class="line">&#123;</span><br><span class="line">      <span class="string">"DownstreamPathTemplate"</span>: <span class="string">"/api/Good/&#123;id&#125;"</span>,</span><br><span class="line">      <span class="string">"DownstreamScheme"</span>: <span class="string">"http"</span>,</span><br><span class="line">      <span class="string">"DownstreamHostAndPorts"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">"Host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">          <span class="string">"Port"</span>: <span class="number">1001</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"UpstreamPathTemplate"</span>: <span class="string">"/good/&#123;id&#125;"</span>,</span><br><span class="line">      <span class="string">"UpstreamHttpMethod"</span>: [ <span class="string">"Get"</span>, <span class="string">"Post"</span> ],</span><br><span class="line">      <span class="string">"Key"</span>: <span class="string">"Good"</span>,</span><br><span class="line">      <span class="string">"Priority"</span>: <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//ocelot.order.json</span></span><br><span class="line">&#123;</span><br><span class="line">      <span class="string">"DownstreamPathTemplate"</span>: <span class="string">"/api/Order/&#123;id&#125;"</span>,</span><br><span class="line">      <span class="string">"DownstreamScheme"</span>: <span class="string">"http"</span>,</span><br><span class="line">      <span class="string">"DownstreamHostAndPorts"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">"Host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">          <span class="string">"Port"</span>: <span class="number">1002</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"UpstreamPathTemplate"</span>: <span class="string">"/order/&#123;id&#125;"</span>,</span><br><span class="line">      <span class="string">"UpstreamHttpMethod"</span>: [ <span class="string">"Get"</span>, <span class="string">"Post"</span> ],</span><br><span class="line">      <span class="string">"Key"</span>: <span class="string">"Order"</span>,</span><br><span class="line">      <span class="string">"Priority"</span>: <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>ocelot.all.json</code>中加入聚合配置</p>
+</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"Aggregates"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"ReRouteKeys"</span>: [</span><br><span class="line">        <span class="string">"Good"</span>,</span><br><span class="line">        <span class="string">"Order"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"UpstreamPathTemplate"</span>: <span class="string">"/GetOrderDetail/&#123;id&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Notes:</strong> 这里<code>Aggregates</code>跟<code>ReRoutes</code>同级，<code>ReRouteKeys</code>中填写的数组就是上面步骤3中设置的<code>Key</code>属性对应的值。</p>
+</blockquote>
+<ol start="4">
+<li>客户端请求接口地址 <code>http://localhost:1000/GetOrderDetail/1</code> 叫得到如下响应</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"Good"</span>:&#123;</span><br><span class="line">        <span class="string">"Id"</span>:<span class="number">1</span>,</span><br><span class="line">        <span class="string">"Content"</span>:<span class="string">"1的关联的商品明细"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"Order"</span>:&#123;</span><br><span class="line">        <span class="string">"Id"</span>:<span class="number">1</span>,</span><br><span class="line">        <span class="string">"Content"</span>:<span class="string">"1的订单明细"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h2><p>Ocelot允许您指定服务发现提供程序，并将使用它来查找Ocelot将请求转发到的下游服务的主机和端口。目前，这仅在<code>GlobalConfiguration</code>部分中受支持，这意味着相同的服务发现提供程序将用于为<code>ReRoute</code>级别指定<code>ServiceName</code>的所有<code>ReRoutes</code>。</p>
+<h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h3><ol>
+<li>安装Consul支持包</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Ocelot.Provider.Consul</span><br></pre></td></tr></table></figure>
+<p>在<code>startup</code>类中的<code>ConfigureServices</code>方法中增加</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">services.AddOcelot()<span class="comment">//注入Ocelot服务</span></span><br><span class="line">                    .AddConsul();</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><code>GlobalConfiguration</code>中需要加入以下内容。如果您未指定主机和端口，则将使用<code>Consul</code>默认值。</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"ServiceDiscoveryProvider": &#123;</span><br><span class="line">    "Host": "localhost",</span><br><span class="line">    "Port": 8500,</span><br><span class="line">    "Type": "Consul"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/hexo-blog-deploy/tags/网关/" rel="tag"># 网关</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/09/24/2018-09-consul/" rel="next" title="consul笔记">
+                <i class="fa fa-chevron-left"></i> consul笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/09/26/2018-09-ioc-autofac-note/" rel="prev" title="Ioc容器之Autofac">
+                Ioc容器之Autofac <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API网关"><span class="nav-number">1.1.</span> <span class="nav-text">API网关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由"><span class="nav-number">2.</span> <span class="nav-text">路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#上游路由"><span class="nav-number">2.1.</span> <span class="nav-text">上游路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下游路由"><span class="nav-number">2.2.</span> <span class="nav-text">下游路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由负载均衡"><span class="nav-number">2.3.</span> <span class="nav-text">路由负载均衡</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署"><span class="nav-number">3.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本使用"><span class="nav-number">3.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与-IdentityServer-集成"><span class="nav-number">3.2.</span> <span class="nav-text">与 IdentityServer 集成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网关集群"><span class="nav-number">3.3.</span> <span class="nav-text">网关集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consul服务发现"><span class="nav-number">3.4.</span> <span class="nav-text">Consul服务发现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">4.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求聚合"><span class="nav-number">5.</span> <span class="nav-text">请求聚合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是聚合路由"><span class="nav-number">5.1.</span> <span class="nav-text">什么是聚合路由?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务发现"><span class="nav-number">6.</span> <span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用步骤"><span class="nav-number">6.1.</span> <span class="nav-text">使用步骤</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="linux命令,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="简介ls命令用来显示目标列表，在Linux中是使用率较高的命令。ls命令的输出信息可以进行彩色加亮显示，以分区不同类型的文件。 语法1ls（选项）（参数） 选项1234567891011121314151617181920212223-a：显示所有档案及目录（ls内定将档案名或目录名称为“.”的视为影藏，不会列出）；-A：显示除影藏文件“.”和“..”以外的所有文件列表；-C：多列显示输出结果。这">
+<meta name="keywords" content="linux命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ls命令">
+<meta property="og:url" content="https://liuhll.github.io/2019/02/16/2019-02-linux-cmd-ls/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="简介ls命令用来显示目标列表，在Linux中是使用率较高的命令。ls命令的输出信息可以进行彩色加亮显示，以分区不同类型的文件。 语法1ls（选项）（参数） 选项1234567891011121314151617181920212223-a：显示所有档案及目录（ls内定将档案名或目录名称为“.”的视为影藏，不会列出）；-A：显示除影藏文件“.”和“..”以外的所有文件列表；-C：多列显示输出结果。这">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-22T03:41:41.119Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ls命令">
+<meta name="twitter:description" content="简介ls命令用来显示目标列表，在Linux中是使用率较高的命令。ls命令的输出信息可以进行彩色加亮显示，以分区不同类型的文件。 语法1ls（选项）（参数） 选项1234567891011121314151617181920212223-a：显示所有档案及目录（ls内定将档案名或目录名称为“.”的视为影藏，不会列出）；-A：显示除影藏文件“.”和“..”以外的所有文件列表；-C：多列显示输出结果。这">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2019/02/16/2019-02-linux-cmd-ls/">
+
+
+
+
+
+  <title>ls命令 | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2019/02/16/2019-02-linux-cmd-ls/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">ls命令</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-16T17:03:00+08:00">
+                2019-02-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-22T11:41:41+08:00">
+                2019-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog-deploy/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><strong>ls命令</strong>用来显示目标列表，在Linux中是使用率较高的命令。ls命令的输出信息可以进行彩色加亮显示，以分区不同类型的文件。</p>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls（选项）（参数）</span><br></pre></td></tr></table></figure>
+<h1 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">-a：显示所有档案及目录（ls内定将档案名或目录名称为“.”的视为影藏，不会列出）；</span><br><span class="line">-A：显示除影藏文件“.”和“..”以外的所有文件列表；</span><br><span class="line">-C：多列显示输出结果。这是默认选项；</span><br><span class="line">-l：与“-C”选项功能相反，所有输出信息用单列格式输出，不输出为多列；</span><br><span class="line">-F：在每个输出项后追加文件的类型标识符，具体含义：“*”表示具有可执行权限的普通文件，“/”表示目录，“@”表示符号链接，“|”表示命令管道FIFO，“=”表示sockets套接字。当文件为普通文件时，不输出任何标识符；</span><br><span class="line">-b：将文件中的不可输出的字符以反斜线“”加字符编码的方式输出；</span><br><span class="line">-c：与“-lt”选项连用时，按照文件状态时间排序输出目录内容，排序的依据是文件的索引节点中的ctime字段。与“-l”选项连用时，则排序的一句是文件的状态改变时间；</span><br><span class="line">-d：仅显示目录名，而不显示目录下的内容列表。显示符号链接文件本身，而不显示其所指向的目录列表；</span><br><span class="line">-f：此参数的效果和同时指定“aU”参数相同，并关闭“lst”参数的效果；</span><br><span class="line">-i：显示文件索引节点号（inode）。一个索引节点代表一个文件；</span><br><span class="line">--file-type：与“-F”选项的功能相同，但是不显示“*”；</span><br><span class="line">-k：以KB（千字节）为单位显示文件大小；</span><br><span class="line">-l：以长格式显示目录下的内容列表。输出的信息从左到右依次包括文件名，文件类型、权限模式、硬连接数、所有者、组、文件大小和文件的最后修改时间等；</span><br><span class="line">-m：用“,”号区隔每个文件和目录的名称；</span><br><span class="line">-n：以用户识别码和群组识别码替代其名称；</span><br><span class="line">-r：以文件名反序排列并输出目录内容列表；</span><br><span class="line">-s：显示文件和目录的大小，以区块为单位；</span><br><span class="line">-t：用文件和目录的更改时间排序；</span><br><span class="line">-L：如果遇到性质为符号链接的文件或目录，直接列出该链接所指向的原始文件或目录；</span><br><span class="line">-R：递归处理，将指定目录下的所有文件及子目录一并处理；</span><br><span class="line">--full-time：列出完整的日期与时间；</span><br><span class="line">--color[=WHEN]：使用不同的颜色高亮显示不同类型的。</span><br><span class="line">参数</span><br></pre></td></tr></table></figure>
+<h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><p>目录：指定要显示列表的目录，也可以是具体的文件。</p>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><h2 id="显示当前目录下非影藏文件与目录"><a href="#显示当前目录下非影藏文件与目录" class="headerlink" title="显示当前目录下非影藏文件与目录"></a>显示当前目录下非影藏文件与目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ls</span><br><span class="line">anaconda-ks.cfg  install.log  install.log.syslog  satools</span><br></pre></td></tr></table></figure>
+<h2 id="显示当前目录下包括影藏文件在内的所有文件列表"><a href="#显示当前目录下包括影藏文件在内的所有文件列表" class="headerlink" title="显示当前目录下包括影藏文件在内的所有文件列表"></a>显示当前目录下包括影藏文件在内的所有文件列表</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ls -a</span><br><span class="line">.   anaconda-ks.cfg  .bash_logout   .bashrc  install.log         .mysql_history  satools  .tcshrc   .vimrc</span><br><span class="line">..  .bash_history    .bash_profile  .cshrc   install.log.syslog  .rnd            .ssh     .viminfo</span><br></pre></td></tr></table></figure>
+<h2 id="输出长格式列表"><a href="#输出长格式列表" class="headerlink" title="输出长格式列表"></a>输出长格式列表</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ls -1</span><br><span class="line"></span><br><span class="line">anaconda-ks.cfg</span><br><span class="line">install.log</span><br><span class="line">install.log.syslog</span><br><span class="line">satools</span><br></pre></td></tr></table></figure>
+<h2 id="显示文件的inode信息"><a href="#显示文件的inode信息" class="headerlink" title="显示文件的inode信息"></a>显示文件的inode信息</h2><p>索引节点（index inode简称为“inode”）是Linux中一个特殊的概念，具有相同的索引节点号的两个文本本质上是同一个文件（除文件名不同外）。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ls -i -l anaconda-ks.cfg install.log</span><br><span class="line">2345481 -rw------- 1 root root   859 Jun 11 22:49 anaconda-ks.cfg</span><br><span class="line">2345474 -rw-r--r-- 1 root root 13837 Jun 11 22:49 install.log</span><br></pre></td></tr></table></figure></p>
+<h2 id="水平输出文件列表"><a href="#水平输出文件列表" class="headerlink" title="水平输出文件列表"></a>水平输出文件列表</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ls -m</span><br><span class="line"></span><br><span class="line">bin, boot, data, dev, etc, home, lib, lost+found, media, misc, mnt, opt, proc, root, sbin, selinux, srv, sys, tmp, usr, var</span><br></pre></td></tr></table></figure>
+<h2 id="最近修改的文件显示在最上面"><a href="#最近修改的文件显示在最上面" class="headerlink" title="最近修改的文件显示在最上面"></a>最近修改的文件显示在最上面</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ls -t</span><br><span class="line"></span><br><span class="line">tmp  root  etc  dev  lib  boot  sys  proc  data  home  bin  sbin  usr  var  lost+found  media  mnt  opt  selinux  srv  misc</span><br></pre></td></tr></table></figure>
+<h2 id="显示递归文件"><a href="#显示递归文件" class="headerlink" title="显示递归文件"></a>显示递归文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ls -R</span><br><span class="line">.:</span><br><span class="line">anaconda-ks.cfg  install.log  install.log.syslog  satools</span><br><span class="line"></span><br><span class="line">./satools:</span><br><span class="line">black.txt  freemem.sh  iptables.sh  lnmp.sh  mysql  php502_check.sh  ssh_safe.sh</span><br></pre></td></tr></table></figure>
+<h2 id="打印文件的UID和GID"><a href="#打印文件的UID和GID" class="headerlink" title="打印文件的UID和GID"></a>打印文件的UID和GID</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ls -n</span><br><span class="line"></span><br><span class="line">total 254</span><br><span class="line">drwxr-xr-x   2 0 0  4096 Jun 12 04:03 bin</span><br><span class="line">drwxr-xr-x   4 0 0  1024 Jun 15 14:45 boot</span><br><span class="line">drwxr-xr-x   6 0 0  4096 Jun 12 10:26 data</span><br><span class="line">drwxr-xr-x  10 0 0  3520 Sep 26 15:38 dev</span><br><span class="line">drwxr-xr-x  75 0 0  4096 Oct 16 04:02 etc</span><br><span class="line">drwxr-xr-x   4 0 0  4096 Jun 12 10:26 home</span><br><span class="line">drwxr-xr-x  14 0 0 12288 Jun 16 04:02 lib</span><br><span class="line">drwx------   2 0 0 16384 Jun 11 22:46 lost+found</span><br><span class="line">drwxr-xr-x   2 0 0  4096 May 11  2011 media</span><br><span class="line">drwxr-xr-x   2 0 0  4096 Nov  8  2010 misc</span><br><span class="line">drwxr-xr-x   2 0 0  4096 May 11  2011 mnt</span><br><span class="line">drwxr-xr-x   2 0 0  4096 May 11  2011 opt</span><br><span class="line">dr-xr-xr-x 232 0 0     0 Jun 15 11:04 proc</span><br><span class="line">drwxr-x---   4 0 0  4096 Oct 15 14:43 root</span><br><span class="line">drwxr-xr-x   2 0 0 12288 Jun 12 04:03 sbin</span><br><span class="line">drwxr-xr-x   2 0 0  4096 May 11  2011 selinux</span><br><span class="line">drwxr-xr-x   2 0 0  4096 May 11  2011 srv</span><br><span class="line">drwxr-xr-x  11 0 0     0 Jun 15 11:04 sys</span><br><span class="line">drwxrwxrwt   3 0 0 98304 Oct 16 08:45 tmp</span><br><span class="line">drwxr-xr-x  13 0 0  4096 Jun 11 23:38 usr</span><br><span class="line">drwxr-xr-x  19 0 0  4096 Jun 11 23:38 var</span><br></pre></td></tr></table></figure>
+<h2 id="列出文件和文件夹的详细信息"><a href="#列出文件和文件夹的详细信息" class="headerlink" title="列出文件和文件夹的详细信息"></a>列出文件和文件夹的详细信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ls -l</span><br><span class="line"></span><br><span class="line">total 254</span><br><span class="line">drwxr-xr-x   2 root root  4096 Jun 12 04:03 bin</span><br><span class="line">drwxr-xr-x   4 root root  1024 Jun 15 14:45 boot</span><br><span class="line">drwxr-xr-x   6 root root  4096 Jun 12 10:26 data</span><br><span class="line">drwxr-xr-x  10 root root  3520 Sep 26 15:38 dev</span><br><span class="line">drwxr-xr-x  75 root root  4096 Oct 16 04:02 etc</span><br><span class="line">drwxr-xr-x   4 root root  4096 Jun 12 10:26 home</span><br><span class="line">drwxr-xr-x  14 root root 12288 Jun 16 04:02 lib</span><br><span class="line">drwx------   2 root root 16384 Jun 11 22:46 lost+found</span><br><span class="line">drwxr-xr-x   2 root root  4096 May 11  2011 media</span><br><span class="line">drwxr-xr-x   2 root root  4096 Nov  8  2010 misc</span><br><span class="line">drwxr-xr-x   2 root root  4096 May 11  2011 mnt</span><br><span class="line">drwxr-xr-x   2 root root  4096 May 11  2011 opt</span><br><span class="line">dr-xr-xr-x 232 root root     0 Jun 15 11:04 proc</span><br><span class="line">drwxr-x---   4 root root  4096 Oct 15 14:43 root</span><br><span class="line">drwxr-xr-x   2 root root 12288 Jun 12 04:03 sbin</span><br><span class="line">drwxr-xr-x   2 root root  4096 May 11  2011 selinux</span><br><span class="line">drwxr-xr-x   2 root root  4096 May 11  2011 srv</span><br><span class="line">drwxr-xr-x  11 root root     0 Jun 15 11:04 sys</span><br><span class="line">drwxrwxrwt   3 root root 98304 Oct 16 08:48 tmp</span><br><span class="line">drwxr-xr-x  13 root root  4096 Jun 11 23:38 usr</span><br><span class="line">drwxr-xr-x  19 root root  4096 Jun 11 23:38 var</span><br></pre></td></tr></table></figure>
+<h2 id="列出可读文件和文件夹详细信息"><a href="#列出可读文件和文件夹详细信息" class="headerlink" title="列出可读文件和文件夹详细信息"></a>列出可读文件和文件夹详细信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# ls -lh</span><br><span class="line"></span><br><span class="line">total 254K</span><br><span class="line">drwxr-xr-x   2 root root 4.0K Jun 12 04:03 bin</span><br><span class="line">drwxr-xr-x   4 root root 1.0K Jun 15 14:45 boot</span><br><span class="line">drwxr-xr-x   6 root root 4.0K Jun 12 10:26 data</span><br><span class="line">drwxr-xr-x  10 root root 3.5K Sep 26 15:38 dev</span><br><span class="line">drwxr-xr-x  75 root root 4.0K Oct 16 04:02 etc</span><br><span class="line">drwxr-xr-x   4 root root 4.0K Jun 12 10:26 home</span><br><span class="line">drwxr-xr-x  14 root root  12K Jun 16 04:02 lib</span><br><span class="line">drwx------   2 root root  16K Jun 11 22:46 lost+found</span><br><span class="line">drwxr-xr-x   2 root root 4.0K May 11  2011 media</span><br><span class="line">drwxr-xr-x   2 root root 4.0K Nov  8  2010 misc</span><br><span class="line">drwxr-xr-x   2 root root 4.0K May 11  2011 mnt</span><br><span class="line">drwxr-xr-x   2 root root 4.0K May 11  2011 opt</span><br><span class="line">dr-xr-xr-x 235 root root    0 Jun 15 11:04 proc</span><br><span class="line">drwxr-x---   4 root root 4.0K Oct 15 14:43 root</span><br><span class="line">drwxr-xr-x   2 root root  12K Jun 12 04:03 sbin</span><br><span class="line">drwxr-xr-x   2 root root 4.0K May 11  2011 selinux</span><br><span class="line">drwxr-xr-x   2 root root 4.0K May 11  2011 srv</span><br><span class="line">drwxr-xr-x  11 root root    0 Jun 15 11:04 sys</span><br><span class="line">drwxrwxrwt   3 root root  96K Oct 16 08:49 tmp</span><br><span class="line">drwxr-xr-x  13 root root 4.0K Jun 11 23:38 usr</span><br><span class="line">drwxr-xr-x  19 root root 4.0K Jun 11 23:38 var</span><br></pre></td></tr></table></figure>
+<h2 id="列出文件并标记颜色分类"><a href="#列出文件并标记颜色分类" class="headerlink" title="列出文件并标记颜色分类"></a>列出文件并标记颜色分类</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx-1.2.1]# ls --color=auto</span><br><span class="line"></span><br><span class="line">auto  CHANGES  CHANGES.ru  conf  configure  contrib  html  LICENSE  Makefile  man  objs  README  src</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/linux命令/" rel="tag"># linux命令</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2019/01/06/2019-01-linux-shell-echo/" rel="next" title="Shell echo命令">
+                <i class="fa fa-chevron-left"></i> Shell echo命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2019/02/16/2019-02-linux-cmd-cat/" rel="prev" title="cat命令">
+                cat命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语法"><span class="nav-number">2.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选项"><span class="nav-number">3.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数"><span class="nav-number">4.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例"><span class="nav-number">5.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显示当前目录下非影藏文件与目录"><span class="nav-number">5.1.</span> <span class="nav-text">显示当前目录下非影藏文件与目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示当前目录下包括影藏文件在内的所有文件列表"><span class="nav-number">5.2.</span> <span class="nav-text">显示当前目录下包括影藏文件在内的所有文件列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出长格式列表"><span class="nav-number">5.3.</span> <span class="nav-text">输出长格式列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示文件的inode信息"><span class="nav-number">5.4.</span> <span class="nav-text">显示文件的inode信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#水平输出文件列表"><span class="nav-number">5.5.</span> <span class="nav-text">水平输出文件列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最近修改的文件显示在最上面"><span class="nav-number">5.6.</span> <span class="nav-text">最近修改的文件显示在最上面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示递归文件"><span class="nav-number">5.7.</span> <span class="nav-text">显示递归文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印文件的UID和GID"><span class="nav-number">5.8.</span> <span class="nav-text">打印文件的UID和GID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出文件和文件夹的详细信息"><span class="nav-number">5.9.</span> <span class="nav-text">列出文件和文件夹的详细信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出可读文件和文件夹详细信息"><span class="nav-number">5.10.</span> <span class="nav-text">列出可读文件和文件夹详细信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出文件并标记颜色分类"><span class="nav-number">5.11.</span> <span class="nav-text">列出文件并标记颜色分类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

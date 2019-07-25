@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="微服务,dev-tools,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="版本管理工具git 开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理，创建分支和合并分支异常简单、方便 https://git-scm.com/ https://www.liaoxuefeng.com/wiki/896043488029600   非常不建议使用svn作为版本管理工具,无论是版本管理、分支管理、代码检视都无法做到，团队中如果有人代码不规范，后期代码就会变得">
+<meta name="keywords" content="微服务,dev-tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发者工具推荐">
+<meta property="og:url" content="https://liuhll.github.io/2019/07/25/2019-07-dev-tools-recommend/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="版本管理工具git 开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理，创建分支和合并分支异常简单、方便 https://git-scm.com/ https://www.liaoxuefeng.com/wiki/896043488029600   非常不建议使用svn作为版本管理工具,无论是版本管理、分支管理、代码检视都无法做到，团队中如果有人代码不规范，后期代码就会变得">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-25T05:44:39.328Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="开发者工具推荐">
+<meta name="twitter:description" content="版本管理工具git 开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理，创建分支和合并分支异常简单、方便 https://git-scm.com/ https://www.liaoxuefeng.com/wiki/896043488029600   非常不建议使用svn作为版本管理工具,无论是版本管理、分支管理、代码检视都无法做到，团队中如果有人代码不规范，后期代码就会变得">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2019/07/25/2019-07-dev-tools-recommend/">
+
+
+
+
+
+  <title>开发者工具推荐 | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2019/07/25/2019-07-dev-tools-recommend/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">开发者工具推荐</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T13:43:38+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-25T13:44:39+08:00">
+                2019-07-25
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="版本管理工具"><a href="#版本管理工具" class="headerlink" title="版本管理工具"></a>版本管理工具</h2><h3 id="git"><a href="#git" class="headerlink" title="git"></a>git</h3><ul>
+<li>开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理，创建分支和合并分支异常简单、方便</li>
+<li><a href="https://git-scm.com/" target="_blank" rel="noopener">https://git-scm.com/</a></li>
+<li><a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/896043488029600</a></li>
+</ul>
+<blockquote>
+<p>非常不建议使用svn作为版本管理工具,无论是版本管理、分支管理、代码检视都无法做到，团队中如果有人代码不规范，后期代码就会变得越来越差，产品质量根本得不到保证</p>
+</blockquote>
+<h3 id="gitlab"><a href="#gitlab" class="headerlink" title="gitlab"></a>gitlab</h3><ul>
+<li>GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务</li>
+<li><a href="https://about.gitlab.com/pricing/#gitlab-com" target="_blank" rel="noopener">https://about.gitlab.com/pricing/#gitlab-com</a></li>
+</ul>
+<h2 id="持续集成工具"><a href="#持续集成工具" class="headerlink" title="持续集成工具"></a>持续集成工具</h2><h3 id="jenkins"><a href="#jenkins" class="headerlink" title="jenkins"></a>jenkins</h3><ul>
+<li>基于java开发的一个持续集成工具,提供超过1000个插件来支持构建、部署、自动化， 满足任何项目的需要。</li>
+<li><a href="https://jenkins.io/zh/" target="_blank" rel="noopener">https://jenkins.io/zh/</a></li>
+</ul>
+<h3 id="gitlab-runner"><a href="#gitlab-runner" class="headerlink" title="gitlab-runner"></a>gitlab-runner</h3><ul>
+<li>gitlab提供的持续集成工具，能够与gitlab整合在一起，方便的实现持续集成与构建</li>
+<li><a href="https://docs.gitlab.com/ee/ci/quick_start/README.html" target="_blank" rel="noopener">https://docs.gitlab.com/ee/ci/quick_start/README.html</a></li>
+</ul>
+<h2 id="文档管理-API文档、在线文档"><a href="#文档管理-API文档、在线文档" class="headerlink" title="文档管理(API文档、在线文档)"></a>文档管理(API文档、在线文档)</h2><h3 id="docfx"><a href="#docfx" class="headerlink" title="docfx"></a>docfx</h3><ul>
+<li>微软官方提供的在线文档工具</li>
+<li><a href="https://dotnet.github.io/docfx/" target="_blank" rel="noopener">https://dotnet.github.io/docfx/</a></li>
+</ul>
+<h3 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h3><ul>
+<li>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</li>
+</ul>
+<blockquote>
+<p>如果需要团建的话可以考虑通过该工具维护内部的学习文档</p>
+</blockquote>
+<h3 id="swagger"><a href="#swagger" class="headerlink" title="swagger"></a>swagger</h3><ul>
+<li>Swagger 可以生成一个具有互动性的API控制台,开发者可以用来快速学习和尝试API</li>
+<li><a href="https://swagger.io/" target="_blank" rel="noopener">https://swagger.io/</a></li>
+</ul>
+<h3 id="easy-mock"><a href="#easy-mock" class="headerlink" title="easy-mock"></a>easy-mock</h3><ul>
+<li>Easy Mock 是一个可视化，并且能快速生成 模拟数据 的持久化服务</li>
+<li><a href="https://www.easy-mock.com/" target="_blank" rel="noopener">https://www.easy-mock.com/</a></li>
+</ul>
+<h3 id="gitbook"><a href="#gitbook" class="headerlink" title="gitbook"></a>gitbook</h3><ul>
+<li><a href="https://www.gitbook.com/" target="_blank" rel="noopener">https://www.gitbook.com/</a></li>
+</ul>
+<h2 id="容器与容器管理"><a href="#容器与容器管理" class="headerlink" title="容器与容器管理"></a>容器与容器管理</h2><h3 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h3><ul>
+<li>一个开源的服务引擎管理工具,可以说改变软件行业开发与交付的模式(Build Once,Run AnyWhere)不是吹的。</li>
+<li><a href="https://www.docker.com/" target="_blank" rel="noopener">https://www.docker.com/</a></li>
+</ul>
+<h3 id="k8s"><a href="#k8s" class="headerlink" title="k8s"></a>k8s</h3><ul>
+<li>Google开源的容器集群管理系统</li>
+<li><a href="https://www.kubernetes.org.cn/k8s" target="_blank" rel="noopener">https://www.kubernetes.org.cn/k8s</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/</a></li>
+</ul>
+<h3 id="docker-swarm"><a href="#docker-swarm" class="headerlink" title="docker-swarm"></a>docker-swarm</h3><ul>
+<li>docker 官方提供的容器集群管理平台</li>
+<li><a href="https://docs.docker.com/swarm/" target="_blank" rel="noopener">https://docs.docker.com/swarm/</a></li>
+</ul>
+<h3 id="rancher"><a href="#rancher" class="headerlink" title="rancher"></a>rancher</h3><ul>
+<li>Rancher是一个开源的企业级容器管理平台，1.6.x支持docker-swarm,2.0+支持k8s</li>
+<li><a href="https://rancher.com/docs/rancher/v1.6/zh/" target="_blank" rel="noopener">https://rancher.com/docs/rancher/v1.6/zh/</a></li>
+<li><a href="https://www.cnrancher.com/docs/rancher/v2.x/cn/overview/" target="_blank" rel="noopener">https://www.cnrancher.com/docs/rancher/v2.x/cn/overview/</a></li>
+</ul>
+<blockquote>
+<p>什么时候使用k8s什么时候使用docker-swarm?<br>我个人推荐优先使用k8s作为容器管理平台。但是目标客户不愿意投入的情况下，并且服务节点相对较少(比如只有不到几十个)的情况下，推荐使用docker-swarm作为容器管理平台,大型的集群服务管理推荐使用k8s</p>
+</blockquote>
+<h2 id="仓库管理"><a href="#仓库管理" class="headerlink" title="仓库管理"></a>仓库管理</h2><h3 id="nuget-server"><a href="#nuget-server" class="headerlink" title="nuget.server"></a>nuget.server</h3><ul>
+<li>提供nuget包管理工具</li>
+<li><a href="https://github.com/NuGet/NuGet.Server" target="_blank" rel="noopener">https://github.com/NuGet/NuGet.Server</a></li>
+</ul>
+<h3 id="helm"><a href="#helm" class="headerlink" title="helm"></a>helm</h3><ul>
+<li>k8s软件包(源)管理工具</li>
+<li><a href="https://helm.sh/" target="_blank" rel="noopener">https://helm.sh/</a></li>
+</ul>
+<h3 id="harbor"><a href="#harbor" class="headerlink" title="harbor"></a>harbor</h3><ul>
+<li>docker私有镜像仓库</li>
+<li><a href="https://goharbor.io/" target="_blank" rel="noopener">https://goharbor.io/</a></li>
+</ul>
+<h3 id="nexus"><a href="#nexus" class="headerlink" title="nexus"></a>nexus</h3><ul>
+<li>除了支持上面所述的各种软件源(包)管理之外,还支持yum、python、npm等包管理(推荐)</li>
+<li><a href="https://www.sonatype.com/nexus-repository-sonatype" target="_blank" rel="noopener">https://www.sonatype.com/nexus-repository-sonatype</a></li>
+</ul>
+<h2 id="微服务框架"><a href="#微服务框架" class="headerlink" title="微服务框架"></a>微服务框架</h2><h3 id="surging"><a href="#surging" class="headerlink" title="surging"></a>surging</h3><ul>
+<li>dotnetcore社区的一个微服务框架,主要维护者范亮</li>
+<li><a href="https://github.com/dotnetcore/surging" target="_blank" rel="noopener">https://github.com/dotnetcore/surging</a></li>
+<li><a href="https://github.com/liuhll/Surging.Sample" target="_blank" rel="noopener">https://github.com/liuhll/Surging.Sample</a></li>
+</ul>
+<h2 id="spring-cloud"><a href="#spring-cloud" class="headerlink" title="spring cloud"></a>spring cloud</h2><ul>
+<li><a href="https://spring.io/projects/spring-cloud" target="_blank" rel="noopener">https://spring.io/projects/spring-cloud</a><h3 id="eShopOnContainers"><a href="#eShopOnContainers" class="headerlink" title="eShopOnContainers"></a>eShopOnContainers</h3></li>
+<li>微软官方案列</li>
+<li><a href="https://github.com/dotnet-architecture/eShopOnContainers" target="_blank" rel="noopener">https://github.com/dotnet-architecture/eShopOnContainers</a></li>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/standard/microservices-architecture/" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/standard/microservices-architecture/</a></li>
+</ul>
+<h3 id="microdot"><a href="#microdot" class="headerlink" title="microdot"></a>microdot</h3><ul>
+<li>.net framework平台下的一个微服务框架,可以与Orleans(奥尔良)结合使用</li>
+<li><a href="https://github.com/gigya/microdot" target="_blank" rel="noopener">https://github.com/gigya/microdot</a></li>
+</ul>
+<h3 id="enode"><a href="#enode" class="headerlink" title="enode"></a>enode</h3><ul>
+<li>cqrs + ddd实现的soa框架</li>
+<li><a href="https://github.com/tangxuehua/enode" target="_blank" rel="noopener">https://github.com/tangxuehua/enode</a></li>
+</ul>
+<h2 id="推荐使用的工具"><a href="#推荐使用的工具" class="headerlink" title="推荐使用的工具"></a>推荐使用的工具</h2><ul>
+<li>版本管理工具(git+gitlab) </li>
+<li>持续集成工具(gitlab-runnber|Jenkins)</li>
+<li>文档工具(在线文档docfx+api文档swagger+模拟数据easymock)</li>
+<li>仓库管理工具(nexus)</li>
+<li>微服务框架(推荐surging|spring-cloud)</li>
+<li>服务器(centos|ubuntu)</li>
+<li>容器和容器管理工具(docker|rancher2.0+|k8s)</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/hexo-blog-deploy/tags/dev-tools/" rel="tag"># dev-tools</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2019/07/22/2019-07-surging-practical-experi/" rel="next" title="Surging实践经验">
+                <i class="fa fa-chevron-left"></i> Surging实践经验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本管理工具"><span class="nav-number">1.</span> <span class="nav-text">版本管理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git"><span class="nav-number">1.1.</span> <span class="nav-text">git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab"><span class="nav-number">1.2.</span> <span class="nav-text">gitlab</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持续集成工具"><span class="nav-number">2.</span> <span class="nav-text">持续集成工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jenkins"><span class="nav-number">2.1.</span> <span class="nav-text">jenkins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-runner"><span class="nav-number">2.2.</span> <span class="nav-text">gitlab-runner</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档管理-API文档、在线文档"><span class="nav-number">3.</span> <span class="nav-text">文档管理(API文档、在线文档)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docfx"><span class="nav-number">3.1.</span> <span class="nav-text">docfx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo"><span class="nav-number">3.2.</span> <span class="nav-text">hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#swagger"><span class="nav-number">3.3.</span> <span class="nav-text">swagger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#easy-mock"><span class="nav-number">3.4.</span> <span class="nav-text">easy-mock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitbook"><span class="nav-number">3.5.</span> <span class="nav-text">gitbook</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器与容器管理"><span class="nav-number">4.</span> <span class="nav-text">容器与容器管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker"><span class="nav-number">4.1.</span> <span class="nav-text">docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s"><span class="nav-number">4.2.</span> <span class="nav-text">k8s</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-swarm"><span class="nav-number">4.3.</span> <span class="nav-text">docker-swarm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rancher"><span class="nav-number">4.4.</span> <span class="nav-text">rancher</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仓库管理"><span class="nav-number">5.</span> <span class="nav-text">仓库管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nuget-server"><span class="nav-number">5.1.</span> <span class="nav-text">nuget.server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#helm"><span class="nav-number">5.2.</span> <span class="nav-text">helm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#harbor"><span class="nav-number">5.3.</span> <span class="nav-text">harbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nexus"><span class="nav-number">5.4.</span> <span class="nav-text">nexus</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务框架"><span class="nav-number">6.</span> <span class="nav-text">微服务框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#surging"><span class="nav-number">6.1.</span> <span class="nav-text">surging</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-cloud"><span class="nav-number">7.</span> <span class="nav-text">spring cloud</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#eShopOnContainers"><span class="nav-number">7.1.</span> <span class="nav-text">eShopOnContainers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#microdot"><span class="nav-number">7.2.</span> <span class="nav-text">microdot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enode"><span class="nav-number">7.3.</span> <span class="nav-text">enode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐使用的工具"><span class="nav-number">8.</span> <span class="nav-text">推荐使用的工具</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

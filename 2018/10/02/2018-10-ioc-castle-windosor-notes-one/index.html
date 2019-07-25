@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Ioc,依赖注入,开源组件,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="概念Ioc和Ioc容器的区别IoC 是一个框架使用的设计原则，用来让开发者来扩展框架或使用它创建应用程序。其基本思路是，框架是知道程序员的对象，并对它们进行调用。IoC容器使用上面所述的（简言之）原则管理类。包括，它们的创建，销毁，生命期，配置和依赖关系。这样类并不需要获取并配置它们所依赖的类。这在系统中极大地减少了耦合，并且简化了重用和可测试性。  Notes:Ioc 与 Ioc容器不是同一个概">
+<meta name="keywords" content="Ioc,依赖注入,开源组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ioc容器之Castle Windsor">
+<meta property="og:url" content="https://liuhll.github.io/2018/10/02/2018-10-ioc-castle-windosor-notes-one/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="概念Ioc和Ioc容器的区别IoC 是一个框架使用的设计原则，用来让开发者来扩展框架或使用它创建应用程序。其基本思路是，框架是知道程序员的对象，并对它们进行调用。IoC容器使用上面所述的（简言之）原则管理类。包括，它们的创建，销毁，生命期，配置和依赖关系。这样类并不需要获取并配置它们所依赖的类。这在系统中极大地减少了耦合，并且简化了重用和可测试性。  Notes:Ioc 与 Ioc容器不是同一个概">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.bookstack.cn/projects/Windsor-doc-cn/docs/images/component.png">
+<meta property="og:image" content="http://static.bookstack.cn/projects/Windsor-doc-cn/docs/images/creation-flow.png">
+<meta property="og:image" content="http://static.bookstack.cn/projects/Windsor-doc-cn/docs/images/lifecycle-simplified.png">
+<meta property="og:updated_time" content="2019-07-22T03:41:41.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ioc容器之Castle Windsor">
+<meta name="twitter:description" content="概念Ioc和Ioc容器的区别IoC 是一个框架使用的设计原则，用来让开发者来扩展框架或使用它创建应用程序。其基本思路是，框架是知道程序员的对象，并对它们进行调用。IoC容器使用上面所述的（简言之）原则管理类。包括，它们的创建，销毁，生命期，配置和依赖关系。这样类并不需要获取并配置它们所依赖的类。这在系统中极大地减少了耦合，并且简化了重用和可测试性。  Notes:Ioc 与 Ioc容器不是同一个概">
+<meta name="twitter:image" content="http://static.bookstack.cn/projects/Windsor-doc-cn/docs/images/component.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2018/10/02/2018-10-ioc-castle-windosor-notes-one/">
+
+
+
+
+
+  <title>Ioc容器之Castle Windsor | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2018/10/02/2018-10-ioc-castle-windosor-notes-one/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Ioc容器之Castle Windsor</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-02T00:23:04+08:00">
+                2018-10-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-22T11:41:41+08:00">
+                2019-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog-deploy/categories/ioc容器/" itemprop="url" rel="index">
+                    <span itemprop="name">ioc容器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="Ioc和Ioc容器的区别"><a href="#Ioc和Ioc容器的区别" class="headerlink" title="Ioc和Ioc容器的区别"></a>Ioc和Ioc容器的区别</h3><p><code>IoC</code> 是一个框架使用的设计原则，用来让开发者来扩展框架或使用它创建应用程序。其基本思路是，框架是知道程序员的对象，并对它们进行调用。<br><code>IoC容器</code>使用上面所述的（简言之）原则管理类。包括，它们的创建，销毁，生命期，配置和依赖关系。这样类并不需要获取并配置它们所依赖的类。这在系统中极大地减少了耦合，并且简化了重用和可测试性。</p>
+<blockquote>
+<p><strong>Notes:</strong><br><code>Ioc</code> 与 <code>Ioc容器</code>不是同一个概念。<br>那些认为<code>IoC</code>与<code>IoC容器</code>是一个同义词的人导致了一些混乱。如前所述，IoC是一个更广泛的原则。</p>
+</blockquote>
+<h3 id="服务、组件、依赖"><a href="#服务、组件、依赖" class="headerlink" title="服务、组件、依赖"></a>服务、组件、依赖</h3><p><img src="http://static.bookstack.cn/projects/Windsor-doc-cn/docs/images/component.png" alt="服务,组件,依赖"></p>
+<h3 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h3><p><code>服务</code>是高等级的。它定义了某个功能、协议所需要的方面，但它不泄漏关于谁、如何、哪里准备了某个功能的任何细节。<br>一般地，服务会被定义为<code>接口</code>。</p>
+<h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p><code>组件</code>和<code>服务</code>有关。<code>服务</code>是一个抽象的术语，但我们处理具体，真实的世界。<code>组件</code>一般是指实现了某个服务的具体的类。</p>
+<h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><p>一个组件工作来完成它的服务不是空谈,一个组件完成某项工作（功能）可能会需要其他组件的服务协助，也就是说某个功能可能需要多个组件协同工作（例如: 咖啡店依赖于公用事业公司（电力）提供的服务、他的供应商（以得到豆类，牛奶等），大多数组件将最终委托它们的非必须方面给其他组件）。</p>
+<h3 id="组件的创建过程"><a href="#组件的创建过程" class="headerlink" title="组件的创建过程"></a>组件的创建过程</h3><p><img src="http://static.bookstack.cn/projects/Windsor-doc-cn/docs/images/creation-flow.png" alt="组件的创建过程"></p>
+<ol>
+<li>定位处理器(Locating Handler)</li>
+</ol>
+<ul>
+<li>它调用与它相关联的所有<code>ComponentResolvingDelegate</code>，让他们有机会在实际开始之前来影响它的决定。这里有个例子， 什么时候委托传递到Fluent注册API的<code>DynamicParameters</code>方法。（Fluent注册API）</li>
+<li>如果未提供内嵌参数，它会检查该组件及其所有强制依赖是否能够解析。如果不能，抛出<code>HandlerException</code>异常。</li>
+<li>最后，处理器要求生命期方式管理器解析该组件。</li>
+</ul>
+<ol start="2">
+<li><p>生命期方式管理器<br>有一个它可以重复使用的组件实例，它获得并直接返回该实例返回到处理器。如果没有，它要求它的<code>组件激活器</code>创建一个。</p>
+</li>
+<li><p>组件激活器<br>组件激活器负责创建组件的实例。各种激活器有各自的实现。当您通过<code>UsingFactoryMethod</code>创建组件时，您提供的委托将被调用以创建实例。工厂支持设施或远程设施有它们自己的一套激活器，用于执行组件的自定义初始化。</p>
+</li>
+<li><p>发布政策<br><code>处理器</code>调用<code>发布政策</code>以跟踪组件，然后将组件传递给容器，容器将组件返回给用户<br>多数时候你应该使用 <code>DefaultComponentActivator</code></p>
+</li>
+</ol>
+<h3 id="依赖是如何解析的"><a href="#依赖是如何解析的" class="headerlink" title="依赖是如何解析的"></a>依赖是如何解析的</h3><p>Windsor 中的组件很少是独立的。毕竟，Windsor 最主要的任务是查找和管理依赖。</p>
+<h4 id="依赖解析器（Dependency-Resolver）"><a href="#依赖解析器（Dependency-Resolver）" class="headerlink" title="依赖解析器（Dependency Resolver）"></a>依赖解析器（Dependency Resolver）</h4><p>Windsor 使用依赖解析器（实现<code>IDependencyResolver</code>接口的类型）解析组件的依赖。默认依赖解析器（<code>DefaultDependencyResolver</code> 类）。</p>
+<ol>
+<li>创建上下文（Creation Context）<br>首先依赖解析器为依赖调用<code>CreationContext</code>。创建上下文<ul>
+<li>首先尝试用名称解析依赖（传递给 <code>Resolve</code> 的参数: <code>container.Resolve&lt;IFoo&gt;(new Arguments(new { inlineDependency = &quot;its value&quot; }));</code>）</li>
+<li>然后通过使用内联提供的依赖的类型(通过 Fluent 注册 API 的方法 <code>DynamicParameters</code>传递的参数)。</li>
+</ul>
+</li>
+<li>没有内联参数能够满足依赖，解析器询问处理器是否能够满足<ul>
+<li>首先尝试通过名字解析依赖</li>
+<li>然后通过类型</li>
+</ul>
+</li>
+<li><p>上面那些地方都不能解析依赖，解析器询问它的每一个<code>子解析器</code>（实现(<code>ISubDependencyResolver</code>)）是否能够提供依赖</p>
+</li>
+<li><p>上面那些都不能解析依赖，容器尝试自己解析。根据依赖的类型，容器尝试下面的步骤</p>
+<ul>
+<li>对于参数依赖，容器尝试检查 <code>ComponentModel</code>的 <code>Parameters</code> 集合以匹配依赖。包括 XML 提供的参数，或通过 Fluent API 的 <code>Parameters</code> 方法传递的参数。</li>
+<li>对于 <code>service override dependency</code>，容器尝试通过指定关键字匹配组件。</li>
+<li>对于服务依赖，容器将会尝试通过指定关键字匹配任意一个组件</li>
+</ul>
+</li>
+<li>如果上面都不行，抛出<code>DependencyResolverException</code>异常</li>
+</ol>
+<h2 id="使用容器"><a href="#使用容器" class="headerlink" title="使用容器"></a>使用容器</h2><h3 id="三个容器调用模式"><a href="#三个容器调用模式" class="headerlink" title="三个容器调用模式"></a>三个容器调用模式</h3><p>IoC 框架与其他框架不同之处在于你不会在代码中看见许多对框架的调用，在大多数应用中（忽略它们的大小和复杂性）你仅在三个地方直接调用容器。<br>该模式被称为 <code>Three Calls</code>。有时被称为 <code>RRR</code> - <code>注册</code>，<code>解析</code>，<code>释放</code>（<code>Register</code>, <code>Resolve</code>, <code>Release</code>）。在应用中应用容器只需要在三个地方调用容器。更精确的说，在<code>入口项目</code>。</p>
+<p>使用容器的一个非常重要的方面-在应用中有一个应用实例。你只需要一个单独的，容器的<code>根容器</code>实例。在一些非常罕见的高级场景，你可能会创建“子”容器，但是它们都与那个单一的无处不在的根容器栓在一起，作为<code>子容器</code>。</p>
+<h3 id="Call-one-引导程序（bootstrapper）"><a href="#Call-one-引导程序（bootstrapper）" class="headerlink" title="Call one - 引导程序（bootstrapper）"></a>Call one - 引导程序（bootstrapper）</h3><p>在引导程序中创建和配置容器。 例如:<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> IWindsorContainer <span class="title">BootstrapContainer</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> WindsorContainer()</span><br><span class="line">        .Install(</span><br><span class="line">            Configuration.FromAppConfig(),</span><br><span class="line">            FromAssembly.This()</span><br><span class="line">            <span class="comment">//perhaps pass other installers here if needed</span></span><br><span class="line">        );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在引导程序中需要做的事:</p>
+<ol>
+<li>创建将要使用的容器。</li>
+<li>需要的话自定义容器( 大多数时候你不会这样做，通常是从不)。</li>
+<li>注册所有容器将要管理的所有组件。即上面代码中 <code>Install</code> 方法的调用。这里你传递 封装有关应用程序的特定组件的所有信息的安装器 。这就是你将要看到的大部分工作。</li>
+</ol>
+<h3 id="Call-two-Resolve"><a href="#Call-two-Resolve" class="headerlink" title="Call two - Resolve"></a>Call two - Resolve</h3><p>显式从容器解析的全部组件。容器然后构造它们的依赖和依赖的依赖等等的整个图。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> container = BootstrapContainer();</span><br><span class="line"><span class="keyword">var</span> shell = container.Resolve&lt;IShell&gt;();</span><br><span class="line">shell.Display();</span><br></pre></td></tr></table></figure>
+<h3 id="Call-three-Dispose"><a href="#Call-three-Dispose" class="headerlink" title="Call three - Dispose"></a>Call three - Dispose</h3><p>容器管理组件的整个生命期，并且在关闭应用之前我们需要关闭容器，这将反过来停用它管理的所有组件（比如回收它们）。这就是为什么在关闭应用之前调用<code>container.Dispose()</code>是如此重要。</p>
+<h2 id="Windsor-安装器（Installers）"><a href="#Windsor-安装器（Installers）" class="headerlink" title="Windsor 安装器（Installers）"></a>Windsor 安装器（Installers）</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Windsor使用<code>安装器</code> (实现 <code>IWindsorInstaller</code> 接口的类型) 封装和分离你的注册逻辑，一些帮助类，比如 <code>Configuration</code> 和<code>FromAssembly</code>使得安装工作轻而易举。</p>
+<h3 id="IWindsorInstaller-接口"><a href="#IWindsorInstaller-接口" class="headerlink" title="IWindsorInstaller 接口"></a>IWindsorInstaller 接口</h3><p>安装器是实现了<code>IWindsorInstaller</code>接口的简单类型。 该接口只有一个<code>Install</code>方法。该方法获得容器的实例，然后就可以使用<code>Fluent注册</code>API注册组件。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RepositoriesInstaller</span> : <span class="title">IWindsorInstaller</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Install</span>(<span class="params">IWindsorContainer container, IConfigurationStore store</span>)</span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      container.Register(AllTypes.FromAssemblyNamed(<span class="string">"Acme.Crm.Data"</span>)</span><br><span class="line">                            .Where(type =&gt; type.Name.EndsWith(<span class="string">"Repository"</span>))</span><br><span class="line">                            .WithService.DefaultInterfaces()</span><br><span class="line">                            .Configure(c =&gt; c.LifeStyle.PerWebRequest));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>分离安装器: 通常一个单独的安装器安装相关服务的连续闭集（比如仓储，控制器，等等），每个集合都有一个独立的安装器。</li>
+</ul>
+<h3 id="使用安装器"><a href="#使用安装器" class="headerlink" title="使用安装器"></a>使用安装器</h3><p>在创建安装器之后，你必须在启动程序中将它们安装到容器。为此，使用容器的<code>Install</code>方法</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> container = <span class="keyword">new</span> WindsorContainer();</span><br><span class="line">container.Install(</span><br><span class="line">   <span class="keyword">new</span> ControllersInstaller(),</span><br><span class="line">   <span class="keyword">new</span> RepositoriesInstaller(),</span><br><span class="line">   <span class="comment">// and all your other installers</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="FromAssembly帮助类"><a href="#FromAssembly帮助类" class="headerlink" title="FromAssembly帮助类"></a>FromAssembly帮助类</h3><p>通过使用<code>FromAssembly</code> 类，将事情留给 Windsor 完成。这个类有一些选择一个或多个程序集的方法，然后它会实例化那些程序集中的所有安装器类型。这样做的好处是，当你为这些程序集添加新的安装器时，它们会被 Windsor 自动选中，你不需要做额外的工作。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">container.Install(</span><br><span class="line">   FromAssembly.This(),</span><br><span class="line">   FromAssembly.Named(<span class="string">"Acme.Crm.Bootstrap"</span>),</span><br><span class="line">   FromAssembly.Containing&lt;ServicesInstaller&gt;(),</span><br><span class="line">   FromAssembly.InDirectory(<span class="keyword">new</span> AssemblyFilter(<span class="string">"Extensions"</span>)),</span><br><span class="line">   FromAssembly.Instance(<span class="keyword">this</span>.GetPluginAssembly()));</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Notes</strong></p>
+<ul>
+<li>在使用<code>FromAssembly</code>时，你不应该依赖安装器将会被实例化或安装的顺序。它是不确定的，意味着你不会知道执行的顺序。</li>
+<li>如果你需要以指定顺序安装安装器，使用 <code>InstallerFactor</code></li>
+</ul>
+</blockquote>
+<h3 id="InstallerFactory帮助类"><a href="#InstallerFactory帮助类" class="headerlink" title="InstallerFactory帮助类"></a>InstallerFactory帮助类</h3><p>如果需要更严格的控制程序集的安装器（影响安装的顺序，改变实例化方式或只安装一部分，而不是全部），你可以从这个类派生，并提供你自己的实现去实现这些目标。</p>
+<h3 id="Configuration-类"><a href="#Configuration-类" class="headerlink" title="Configuration 类"></a>Configuration 类</h3><p>可以用它来访问<code>AppDomain</code>配置文件（的<code>app.config</code>或<code>web.config</code>文件）中的配置，或任意的XML文件<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">container.Install(</span><br><span class="line">   Configuration.FromAppConfig(),</span><br><span class="line">   Configuration.FromXmlFile(<span class="string">"settings.xml"</span>),</span><br><span class="line">   Configuration.FromXml(<span class="keyword">new</span> AssemblyResource(<span class="string">"assembly://Acme.Crm.Data/Configuration/services.xml"</span>))</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<h2 id="注册-API-引用"><a href="#注册-API-引用" class="headerlink" title="注册 API 引用"></a>注册 API 引用</h2><p>注册 API 提供注册和配置组件的<code>Fluent方法</code>。这是推荐的注册方式，比过细的XML注册更好。因为它是强类型的且容易被重构，它可以作为XML配置的替代方式或补充。和XML一起使用更为有利。</p>
+<ol>
+<li>一个一个的注册组件</li>
+<li>按照约定注册组件</li>
+<li>使用XML配置</li>
+</ol>
+<h2 id="AOP，代理，和拦截器"><a href="#AOP，代理，和拦截器" class="headerlink" title="AOP，代理，和拦截器"></a>AOP，代理，和拦截器</h2><p>Windsor 可以通过使用拦截器<code>DynamicProxy</code>实现切面编程。</p>
+<h3 id="如何创建代理"><a href="#如何创建代理" class="headerlink" title="如何创建代理"></a>如何创建代理</h3><p>不需要显式指定希望一个组件成为代理。Windsor 将会自动创建代理，如果下面的任何一个条件被满足：</p>
+<ol>
+<li>有为该组件指定的<code>拦截器</code>（即包含通过组件拦截器选择器动态选择的拦截器）。</li>
+<li>有为该组件指定的 <code>mixins</code></li>
+<li>有为该组件指定的其他接口</li>
+</ol>
+<h3 id="指定拦截器"><a href="#指定拦截器" class="headerlink" title="指定拦截器"></a>指定拦截器</h3><ol>
+<li>使用 Fluent 注册 API</li>
+<li>使用 XML 配置</li>
+<li>使用 Attributes (just for interceptors) – <code>InterceptorAttribute</code></li>
+</ol>
+<h4 id="使用InterceptorAttribute需要注意的事项"><a href="#使用InterceptorAttribute需要注意的事项" class="headerlink" title="使用InterceptorAttribute需要注意的事项"></a>使用InterceptorAttribute需要注意的事项</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IOrderRepository</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="function">Order <span class="title">GetOrder</span>(<span class="params">Guid id</span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line">[<span class="meta">Interceptor(<span class="meta-string">"cache"</span>)</span>]</span><br><span class="line">[<span class="meta">Interceptor(typeof(LoggingInterceptor))</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OrderRepository</span>: <span class="title">IOrderRepository</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="function">Order <span class="title">GetOrder</span>(<span class="params">Guid id</span>)</span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      <span class="comment">// some implementation</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将特性放在组件类上，而不是接口。</li>
+<li>可以通过类上面的多个特性指定多个拦截器。</li>
+<li>可以通过类型或名称指定拦截器。</li>
+</ul>
+<h3 id="使用拦截器"><a href="#使用拦截器" class="headerlink" title="使用拦截器"></a>使用拦截器</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">container.Register(</span><br><span class="line">   Component.For&lt;LoggingInterceptor&gt;().Lifestyle.Transient,</span><br><span class="line">   Component.For&lt;CacheInterceptor&gt;().Lifestyle.Transient.Named(<span class="string">"cache"</span>),</span><br><span class="line">   Component.For&lt;IOrderRepository&gt;().ImplementedBy&lt;OrderRepository&gt;());</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>notes:</strong><br>拦截器应该是临时的： 强烈建议总是让拦截器是临时的。因为拦截器可以拦截多个使用不同生命期方式的组件，最好是让拦截器自身的寿命不超过它们拦截的组件。因此除非有充足的理由不这么做，总是让拦截器是临时的</p>
+</blockquote>
+<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><h3 id="生命周期类型"><a href="#生命周期类型" class="headerlink" title="生命周期类型"></a>生命周期类型</h3><h4 id="标准生命期类型-常见类型"><a href="#标准生命期类型-常见类型" class="headerlink" title="标准生命期类型: 常见类型"></a>标准生命期类型: 常见类型</h4><ol>
+<li><p>单例（Singleton）<br>单例组件在一个容器中只有一个实例。实例将在第一次请求时被创建，随后每次需要时都进行重用。显式释放单例（通过调用<code>container.Release(mySingleton)</code>）什么都不会做。这个实例将会在它注册的容器销毁时释放。</p>
+<blockquote>
+<p><strong>Notes:</strong><br>单例是默认的生命期类型，将会在未显式指定的时候使用</p>
+</blockquote>
+</li>
+<li><p>瞬态(Transient)<br><code>Transient组件</code>不会绑定到任何作用域。每次需要<code>Transient组件</code>的实例时，容器都会产生一个新的实例，而不会重用它们。可以说<code>Transient组件</code>的作用域有它的使用者决定。因此当使用Transient组件的对象释放时，它们也被释放。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>为了确保正确的组件生命周期管理，Windsor 可能跟踪这些组件。 这意味着，除非你释放它们，否则垃圾收集器将无法收回它们，这最终导致事实上的内存泄漏,记住<code>释放</code>那些你显式<code>解析</code>的。</li>
+<li>当你想控制组件的生命期时，<code>transient</code>是一个好选择。当你每次都需要全新的实例时。当然 <code>transient组件</code>不需要是线程安全的，除非你将在多线程条件下使用。在大多数程序中你会发现你大多数的组件最后都是<code>transient</code>的。</li>
+</ul>
+</blockquote>
+<ol start="3">
+<li>每次Web请求（PerWebRequest）<br>组件的实例会在一个单一的Web请求范围内共享。该实例将在Web请求的范围第一次请求时创建。显式释放它是无效的。实例将在web请求结束时释放。</li>
+</ol>
+<blockquote>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>注册<code>PerWebRequestLifestyleModule</code>: 为了<code>PerWebRequest</code>的正常运行需要将一个<code>IHttpModule</code> - <code>Castle.MicroKernel.Lifestyle.PerWebRequestLifestyleModule</code>注册到 <code>web.config</code> 文件中:</li>
+</ul>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">httpModules</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"PerRequestLifestyle"</span> <span class="attr">type</span>=<span class="string">"Castle.MicroKernel.Lifestyle.PerWebRequestLifestyleModule, Castle.Windsor"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">httpModules</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="标准生命期类型-不常见类型"><a href="#标准生命期类型-不常见类型" class="headerlink" title="标准生命期类型: 不常见类型"></a>标准生命期类型: 不常见类型</h4><ol start="4">
+<li><p>范围（Scoped）</p>
+</li>
+<li><p>Bound<br>如果默认选项不能满足你的需求，你可以提供自定义方式以选择要绑定的组件，使用下面<code>BoundTo</code>方法的重载。</p>
+</li>
+</ol>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p><img src="http://static.bookstack.cn/projects/Windsor-doc-cn/docs/images/lifecycle-simplified.png" alt="生命周期"><br>Windsor 是一个控制组件创建和销毁的工具。</p>
+<ol>
+<li>创建 - 所有的事情都在<code>container.Resolve</code> 或类似的方法内发生 (查看组件是如何创建的以了解详情)。</li>
+<li>使用 - 在你的代码中使用组件完成工作。</li>
+<li>销毁 - 所有的事情在<code>container.ReleaseComponent</code>之内/或之后或组件的生命期范围结束时发生。</li>
+</ol>
+<h2 id="扩展容器"><a href="#扩展容器" class="headerlink" title="扩展容器"></a>扩展容器</h2><h3 id="设施-Facilities"><a href="#设施-Facilities" class="headerlink" title="设施(Facilities)"></a>设施(Facilities)</h3><p>设施是扩展容器的主要方式。使用设施 <strong>可以将外部框架与容器集成</strong>，比如<code>WCF</code> 或 <code>NHibernate</code>，为容器添加新的功能，比如事件连接（event wiring），事务支持（transaction support）……，或为组件（synchronization, startable semantics…）</p>
+<h3 id="如何使用设施"><a href="#如何使用设施" class="headerlink" title="如何使用设施"></a>如何使用设施</h3><p>在使用设施前需要将其注册到容器，通过代码（如下所示）或者XML 配置。<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">container.AddFacility&lt;TypedFactoryFacility&gt;();</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/Ioc/" rel="tag"># Ioc</a>
+          
+            <a href="/hexo-blog-deploy/tags/依赖注入/" rel="tag"># 依赖注入</a>
+          
+            <a href="/hexo-blog-deploy/tags/开源组件/" rel="tag"># 开源组件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/10/01/2018-10-docker-note-summary/" rel="next" title="Docker之基础">
+                <i class="fa fa-chevron-left"></i> Docker之基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/10/02/2018-10-docker-note-dockerfile/" rel="prev" title="Dockerfile笔记">
+                Dockerfile笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ioc和Ioc容器的区别"><span class="nav-number">1.1.</span> <span class="nav-text">Ioc和Ioc容器的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务、组件、依赖"><span class="nav-number">1.2.</span> <span class="nav-text">服务、组件、依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务"><span class="nav-number">1.3.</span> <span class="nav-text">服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件"><span class="nav-number">1.4.</span> <span class="nav-text">组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖"><span class="nav-number">1.5.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件的创建过程"><span class="nav-number">1.6.</span> <span class="nav-text">组件的创建过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖是如何解析的"><span class="nav-number">1.7.</span> <span class="nav-text">依赖是如何解析的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖解析器（Dependency-Resolver）"><span class="nav-number">1.7.1.</span> <span class="nav-text">依赖解析器（Dependency Resolver）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用容器"><span class="nav-number">2.</span> <span class="nav-text">使用容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三个容器调用模式"><span class="nav-number">2.1.</span> <span class="nav-text">三个容器调用模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Call-one-引导程序（bootstrapper）"><span class="nav-number">2.2.</span> <span class="nav-text">Call one - 引导程序（bootstrapper）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Call-two-Resolve"><span class="nav-number">2.3.</span> <span class="nav-text">Call two - Resolve</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Call-three-Dispose"><span class="nav-number">2.4.</span> <span class="nav-text">Call three - Dispose</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windsor-安装器（Installers）"><span class="nav-number">3.</span> <span class="nav-text">Windsor 安装器（Installers）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IWindsorInstaller-接口"><span class="nav-number">3.2.</span> <span class="nav-text">IWindsorInstaller 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用安装器"><span class="nav-number">3.3.</span> <span class="nav-text">使用安装器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FromAssembly帮助类"><span class="nav-number">3.4.</span> <span class="nav-text">FromAssembly帮助类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InstallerFactory帮助类"><span class="nav-number">3.5.</span> <span class="nav-text">InstallerFactory帮助类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration-类"><span class="nav-number">3.6.</span> <span class="nav-text">Configuration 类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册-API-引用"><span class="nav-number">4.</span> <span class="nav-text">注册 API 引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP，代理，和拦截器"><span class="nav-number">5.</span> <span class="nav-text">AOP，代理，和拦截器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何创建代理"><span class="nav-number">5.1.</span> <span class="nav-text">如何创建代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定拦截器"><span class="nav-number">5.2.</span> <span class="nav-text">指定拦截器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用InterceptorAttribute需要注意的事项"><span class="nav-number">5.2.1.</span> <span class="nav-text">使用InterceptorAttribute需要注意的事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用拦截器"><span class="nav-number">5.3.</span> <span class="nav-text">使用拦截器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件的生命周期"><span class="nav-number">6.</span> <span class="nav-text">组件的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期类型"><span class="nav-number">6.1.</span> <span class="nav-text">生命周期类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标准生命期类型-常见类型"><span class="nav-number">6.1.1.</span> <span class="nav-text">标准生命期类型: 常见类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准生命期类型-不常见类型"><span class="nav-number">6.1.2.</span> <span class="nav-text">标准生命期类型: 不常见类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期"><span class="nav-number">6.2.</span> <span class="nav-text">生命周期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展容器"><span class="nav-number">7.</span> <span class="nav-text">扩展容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设施-Facilities"><span class="nav-number">7.1.</span> <span class="nav-text">设施(Facilities)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用设施"><span class="nav-number">7.2.</span> <span class="nav-text">如何使用设施</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

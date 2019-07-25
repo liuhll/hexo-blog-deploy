@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="java,java编程思想,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="抽象过程1. 万物皆为对象理论上讲，我们可以抽取一个待解决问题中的任何概念化构件（狗、建筑、服务）等，将其表示为程序中的对象。 2. 程序是对象的集合对象之间是通过发送消息来告知彼此所要做的。通俗来说，一个程序是一些对象的集合体，程序之间的通信实际是对象与对象之间的通信，要想进行通信，就必须要发送一条消息。更确切的说，我们可以把消息理解为是对对象的某个特定方法的请求。 3. 每个对象都有自己的由其">
+<meta name="keywords" content="java,java编程思想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java编程思想读书笔记一：对象导论">
+<meta property="og:url" content="https://liuhll.github.io/2019/03/11/2019-03-think-in-java-1/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="抽象过程1. 万物皆为对象理论上讲，我们可以抽取一个待解决问题中的任何概念化构件（狗、建筑、服务）等，将其表示为程序中的对象。 2. 程序是对象的集合对象之间是通过发送消息来告知彼此所要做的。通俗来说，一个程序是一些对象的集合体，程序之间的通信实际是对象与对象之间的通信，要想进行通信，就必须要发送一条消息。更确切的说，我们可以把消息理解为是对对象的某个特定方法的请求。 3. 每个对象都有自己的由其">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-22T03:41:41.126Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java编程思想读书笔记一：对象导论">
+<meta name="twitter:description" content="抽象过程1. 万物皆为对象理论上讲，我们可以抽取一个待解决问题中的任何概念化构件（狗、建筑、服务）等，将其表示为程序中的对象。 2. 程序是对象的集合对象之间是通过发送消息来告知彼此所要做的。通俗来说，一个程序是一些对象的集合体，程序之间的通信实际是对象与对象之间的通信，要想进行通信，就必须要发送一条消息。更确切的说，我们可以把消息理解为是对对象的某个特定方法的请求。 3. 每个对象都有自己的由其">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2019/03/11/2019-03-think-in-java-1/">
+
+
+
+
+
+  <title>Java编程思想读书笔记一：对象导论 | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2019/03/11/2019-03-think-in-java-1/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Java编程思想读书笔记一：对象导论</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-11T21:19:03+08:00">
+                2019-03-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-22T11:41:41+08:00">
+                2019-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog-deploy/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="抽象过程"><a href="#抽象过程" class="headerlink" title="抽象过程"></a>抽象过程</h1><h2 id="1-万物皆为对象"><a href="#1-万物皆为对象" class="headerlink" title="1. 万物皆为对象"></a>1. 万物皆为对象</h2><p>理论上讲，我们可以抽取一个待解决问题中的任何概念化构件（狗、建筑、服务）等，将其表示为程序中的对象。</p>
+<h2 id="2-程序是对象的集合"><a href="#2-程序是对象的集合" class="headerlink" title="2. 程序是对象的集合"></a>2. 程序是对象的集合</h2><p>对象之间是通过发送消息来告知彼此所要做的。通俗来说，一个程序是一些对象的集合体，程序之间的通信实际是对象与对象之间的通信，要想进行通信，就必须要发送一条消息。更确切的说，我们可以把消息理解为是对对象的某个特定方法的请求。</p>
+<h2 id="3-每个对象都有自己的由其他对象所构成的存储"><a href="#3-每个对象都有自己的由其他对象所构成的存储" class="headerlink" title="3. 每个对象都有自己的由其他对象所构成的存储"></a>3. 每个对象都有自己的由其他对象所构成的存储</h2><p>换句话说就是一个对象可能由其他多个对象共同创建。</p>
+<h2 id="4-每个对象都拥有其类型"><a href="#4-每个对象都拥有其类型" class="headerlink" title="4. 每个对象都拥有其类型"></a>4. 每个对象都拥有其类型</h2><p>类型是用来区分不同对象的特性，也就是可以发送什么样的消息给它。</p>
+<h2 id="5-某一特定类型的所有对象都可以接收同样的消息"><a href="#5-某一特定类型的所有对象都可以接收同样的消息" class="headerlink" title="5. 某一特定类型的所有对象都可以接收同样的消息"></a>5. 某一特定类型的所有对象都可以接收同样的消息</h2><p>这里是说对象之间信息交互的关系。如果一个“圆形”对象也是一个“几何形”对象，那么这个“圆形“对象一定也能接收发给”几何形”对象的消息。</p>
+<h1 id="每个对象都有一个接口"><a href="#每个对象都有一个接口" class="headerlink" title="每个对象都有一个接口"></a>每个对象都有一个接口</h1><p>对象之间传递消息时，消息的接收是通过接口来传递的，接口对应着对象内部的一个方法，接口暴露给外部对象，内部方法决定消息的执行方式。</p>
+<h1 id="每个对象都提供服务"><a href="#每个对象都提供服务" class="headerlink" title="每个对象都提供服务"></a>每个对象都提供服务</h1><p>可以把对象理解为服务提供者，每一个对象都有它所对应的服务需要提供，因此我们在创建一个对象或者说是构建一个类的时候，要思考能否更大程度的抽象出一个对象，以解决一个实际的问题。</p>
+<h1 id="被隐藏的具体实现"><a href="#被隐藏的具体实现" class="headerlink" title="被隐藏的具体实现"></a>被隐藏的具体实现</h1><p>我们将开发人员分为两种:</p>
+<ol>
+<li>类创建者<br>类创建者负责构造类，包括类的属性和接口、方法，这种类只向客户端程序员暴露必要的部分，而隐藏其他部分，防止客户端程序员对类中重要的数据进行修改以对程序造成重要损失，我们称作是访问控制。</li>
+<li>客户端程序员。</li>
+</ol>
+<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><p>客户端程序员负责快速准确的编写客户端程序。访问控制的第一个原因是让客户端程序员无法接触他们不该接触的部分，因为有些内容对程序本身来说很重要但是与应用程序业务没有关系。<br>另一个原因是便于类创建者在不影响客户端程序的前提下来修改类内部的私有内容。<br>Java中访问控制有三个级别：<code>public</code>、<code>private</code>、<code>protected</code>。</p>
+<ul>
+<li><code>public</code>顾明思议是公有的，表示由<code>public</code>修饰的内容可以供所有人可见。</li>
+<li><code>private</code>为私有的，表示由<code>private</code>修饰的部分只有自己可见。</li>
+<li><code>protected</code>与<code>private</code>类似，差别在于继承类中，子类可以访问父类中的<code>protected</code>修饰区而无法访问private修饰区。此外还有默认的访问权限，即没有上述三种修饰的情况下，默认在包内可见，在包外等同于<code>private</code>级别。</li>
+</ul>
+<h1 id="复用具体实现-组合-–has-a的关系"><a href="#复用具体实现-组合-–has-a的关系" class="headerlink" title="复用具体实现(组合)–has-a的关系"></a>复用具体实现(组合)–has-a的关系</h1><p>一个类并不能完全的被复用到另外一种场景，这时我们需要创建一个新的类，并引入之前的类的对象，引入的对象我们声明为<code>private</code>级别的成员对象。一个新建的类可以有很多个其它类型的对象，这种方式我们称为组合<br>它可以有效的实现我们想要的方式的组合，组合是<strong>has-a</strong>的关系，表明某某类有a对象的属性。同时，由于组合类的成员变量通常都被修饰为<code>private</code>，所以客户端程序员并不能访问他们，同时也方便了类创建者在不影响程序功能的前提下修改这些成员变量。</p>
+<h1 id="继承–-is-a的关系"><a href="#继承–-is-a的关系" class="headerlink" title="继承– is-a的关系"></a>继承– is-a的关系</h1><p>当我们创建一个类时，如果另一个新类与这个类功能相似，我们仍然需要创建这个新类。解决这个问题的办法就是继承。继承虽然也是一个新类，但是这个类是由基类（俗称父类）衍生的导出类（俗称子类）。</p>
+<h2 id="子类与父类之间的关系"><a href="#子类与父类之间的关系" class="headerlink" title="子类与父类之间的关系"></a>子类与父类之间的关系</h2><ol>
+<li><p>子类拥有父类所有<strong>非private</strong>的对象、属性、接口，此外可以根据不同的需要增加不同的功能。父类可以有很多个子类，它包含了子类的所有公共部分。如“几何形”是父类，每一个几何形都具有尺寸、颜色、位置等，同时每一个几何形都可以被绘制、擦除和移动。在此基础上可以导出它的子类“三角形”、“平行四边形”等，他们拥有父类的属性、方法之外还有自己独特的属性，例如有的形状可以被翻转等。</p>
+</li>
+<li><p>子类不光继承了父类的属性，同时也继承了父类的方法，也就是说所有发给父类的消息，都可以发给子类。<br>子类对接口的实现方法可以不改变，即访问子类的接口实际是与访问父类相同，当然也可以自己“覆盖”父类接口的方法，也就是说我和父类使用相同的接口，但是我们做不同的事情(is-a的关系)。同时如前边所说，子类也可以自己新增方法来满足自己的需求。(is-like-a的关系,在子类中增加了新的方法，所以这种相同的关系并不完全)</p>
+</li>
+</ol>
+<h1 id="伴随多态的可互换对象"><a href="#伴随多态的可互换对象" class="headerlink" title="伴随多态的可互换对象"></a>伴随多态的可互换对象</h1><h2 id="前期绑定和后期绑定"><a href="#前期绑定和后期绑定" class="headerlink" title="前期绑定和后期绑定"></a>前期绑定和后期绑定</h2><p>子类继承父类，同时继承了父类的方法，也就是说发给父类的消息同时能够发给子类。那么当我们把子类对象看成泛化的基类对象时，如果有个方法是让泛化的父类操作自己，那么编译器在编译时不知道该执行哪段代码的。一个非面向对象程序的函数调用是前期绑定，函数要执行的代码在程序运行之前就已经确定了，然而在OOP中，直到程序执行我们才知道哪段代码被执行了,所以为了解决消息执行哪段代码的问题，Java使用了后期绑定的概念，使用一小段特殊的代码来代替非面向对象中所说的绝对地址调用，这段代码使用在对象中存储的信息来计算方法的地址</p>
+<h2 id="后期绑定的案例"><a href="#后期绑定的案例" class="headerlink" title="后期绑定的案例"></a>后期绑定的案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(Shape shape)</span></span>&#123;</span><br><span class="line">    shape.erase();</span><br><span class="line">   <span class="comment">//...</span></span><br><span class="line">    shape.draw();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这个方法可以与任意`Shape`类型的对象交互，如果程序中有它的子类调用了该方法</span></span><br><span class="line"></span><br><span class="line">Circle circle = <span class="keyword">new</span> Circle();</span><br><span class="line">Triangle triangle = <span class="keyword">new</span> Triangle();</span><br><span class="line">cicle.doSomething();</span><br><span class="line">triangle.doSomething();</span><br></pre></td></tr></table></figure>
+<p>编译对doSomething的调用会自动处理，而不必考虑是什么类型。这里编译器将子类看成父类，这个过程称作向上转型。这段代码并不是说“如果是Cirle就xxx，如果是Triangle就xxx”，而是“你就是个Shape，只管做就好，注意细节问题的正确性”。其中细节问题由编译器进行处理。</p>
+<h1 id="单根继承结构"><a href="#单根继承结构" class="headerlink" title="单根继承结构"></a>单根继承结构</h1><p>在Java语言中，所有的类都是<code>Object</code>类的子类，拥有着<code>Object</code>类的基本方法。这种单根继承结构有很大的好处，比如在垃圾回收中可以避免由于不知道对象的类型而无处下手，因为他们都可以使用<code>Object</code>类的方法，并且所有对象都可以很容易的在堆上创建。</p>
+<h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h1><p>有时候我们并不知道处理一个问题需要多少个对象，或者他们需要存活多久，那么我们就不知道该怎么样存储这些对象。Java语言中创建了一种对象类型，叫做<em>容器（也叫集合）</em>。这种新的对象类型内部有对其他对象的引用，当你需要的时候你可以很容易的扩充容器的空间来容纳对象。Java中提供了多种容器类型，如<code>List</code>（用于存储序列）、<code>Map</code>（也被称为关联数组，用来建立对象的关联）、<code>Set</code>（每种对象类型只持有一个）。因为容器中存储了其他对象的引用，所以根据单根继承结构，容器中的对象类型都是Obejct类型，这样很方便其他对象类型进行转型。但是从Object类型转到其它特定类型（称作向下转型）很容易发生错误，所以Java SE5之后引入了泛型的概念，参数传递使用一对&lt;&gt;，&lt;&gt;内部可以传递任意类型的对象，这便解决了向下转型带来的安全隐患。</p>
+<h1 id="对象的创建和生命周期"><a href="#对象的创建和生命周期" class="headerlink" title="对象的创建和生命周期"></a>对象的创建和生命周期</h1><p>对象的创建方式有两种:</p>
+<ol>
+<li>在编程时由程序员控制，将对象置于栈中或者是静态区域，这种的好处是知道对象的大小、生命周期。同时也限制了对象的灵活性。</li>
+<li>通过<code>new</code>在内存堆中动态的创建对象，这种方式的好处是灵活，需要的时候直接在内存中创建即可，实现了存储空间的动态管理。</li>
+</ol>
+<p>Java中完全采用了动态内存的分配方式。</p>
+<h2 id="对象的生命周期"><a href="#对象的生命周期" class="headerlink" title="对象的生命周期"></a>对象的生命周期</h2><p>对于生命周期，</p>
+<ul>
+<li><em>栈</em>上的生命周期，编译器可以知道它什么时候销毁，并自动回收。</li>
+<li>而在<em>堆</em>上创建的对象，必须由程序员自己指定回收时间，如果没有指定则会造成内存泄漏。Java中提供了垃圾回收机制，可以自动的回收在<em>堆</em>上创建的对象。</li>
+</ul>
+<h1 id="异常处理：处理错误"><a href="#异常处理：处理错误" class="headerlink" title="异常处理：处理错误"></a>异常处理：处理错误</h1><p>Java内置了异常处理机制，相当于一条与正确执行并行的路线，当程序发生异常时会执行异常的代码。同时，允许程序在异常中进行处理并返回到正确的结果中去</p>
+<h1 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h1><p>Java与其他语言一样，提供多线程的并发编程方式，提高程序运行效率。</p>
+<h1 id="Java与Internet"><a href="#Java与Internet" class="headerlink" title="Java与Internet"></a>Java与Internet</h1><p>Java不仅可以编写客户端程序，还可以编写网络Web应用程序。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/java/" rel="tag"># java</a>
+          
+            <a href="/hexo-blog-deploy/tags/java编程思想/" rel="tag"># java编程思想</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2019/03/11/2019-03-linux-shell-printf/" rel="next" title="shell printf命令：格式化输出语句">
+                <i class="fa fa-chevron-left"></i> shell printf命令：格式化输出语句
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2019/03/12/2019-03-think-in-java-2/" rel="prev" title="Java编程思想学习笔记二：一切都是对象">
+                Java编程思想学习笔记二：一切都是对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#抽象过程"><span class="nav-number">1.</span> <span class="nav-text">抽象过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-万物皆为对象"><span class="nav-number">1.1.</span> <span class="nav-text">1. 万物皆为对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-程序是对象的集合"><span class="nav-number">1.2.</span> <span class="nav-text">2. 程序是对象的集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-每个对象都有自己的由其他对象所构成的存储"><span class="nav-number">1.3.</span> <span class="nav-text">3. 每个对象都有自己的由其他对象所构成的存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-每个对象都拥有其类型"><span class="nav-number">1.4.</span> <span class="nav-text">4. 每个对象都拥有其类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-某一特定类型的所有对象都可以接收同样的消息"><span class="nav-number">1.5.</span> <span class="nav-text">5. 某一特定类型的所有对象都可以接收同样的消息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#每个对象都有一个接口"><span class="nav-number">2.</span> <span class="nav-text">每个对象都有一个接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#每个对象都提供服务"><span class="nav-number">3.</span> <span class="nav-text">每个对象都提供服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#被隐藏的具体实现"><span class="nav-number">4.</span> <span class="nav-text">被隐藏的具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#访问控制"><span class="nav-number">4.1.</span> <span class="nav-text">访问控制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复用具体实现-组合-–has-a的关系"><span class="nav-number">5.</span> <span class="nav-text">复用具体实现(组合)–has-a的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#继承–-is-a的关系"><span class="nav-number">6.</span> <span class="nav-text">继承– is-a的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#子类与父类之间的关系"><span class="nav-number">6.1.</span> <span class="nav-text">子类与父类之间的关系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#伴随多态的可互换对象"><span class="nav-number">7.</span> <span class="nav-text">伴随多态的可互换对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期绑定和后期绑定"><span class="nav-number">7.1.</span> <span class="nav-text">前期绑定和后期绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后期绑定的案例"><span class="nav-number">7.2.</span> <span class="nav-text">后期绑定的案例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单根继承结构"><span class="nav-number">8.</span> <span class="nav-text">单根继承结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器"><span class="nav-number">9.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象的创建和生命周期"><span class="nav-number">10.</span> <span class="nav-text">对象的创建和生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的生命周期"><span class="nav-number">10.1.</span> <span class="nav-text">对象的生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常处理：处理错误"><span class="nav-number">11.</span> <span class="nav-text">异常处理：处理错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并发编程"><span class="nav-number">12.</span> <span class="nav-text">并发编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java与Internet"><span class="nav-number">13.</span> <span class="nav-text">Java与Internet</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="开源框架,网络通信,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="DotNetty介绍DotNetty是微软的Azure团队，使用C#实现的Netty的版本发布。不但使用了C#和.Net平台的技术特点，并且保留了Netty原来绝大部分的编程接口。让我们在使用时，完全可以依照Netty官方的教程来学习和使用DotNetty应用程序。 dotNetty 是一个非阻塞、事件驱动的网络框架。dotNetty 实际上是使用 Threads（多线程）处理 I/O 事件,Do">
+<meta name="keywords" content="开源框架,网络通信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dotnetty笔记">
+<meta property="og:url" content="https://liuhll.github.io/2018/10/09/2018-10-dotnetty-note/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="DotNetty介绍DotNetty是微软的Azure团队，使用C#实现的Netty的版本发布。不但使用了C#和.Net平台的技术特点，并且保留了Netty原来绝大部分的编程接口。让我们在使用时，完全可以依照Netty官方的教程来学习和使用DotNetty应用程序。 dotNetty 是一个非阻塞、事件驱动的网络框架。dotNetty 实际上是使用 Threads（多线程）处理 I/O 事件,Do">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://7n.w3cschool.cn/attachments/image/wk/netty4userguide/4.1.png">
+<meta property="og:image" content="https://waylau.com/essential-netty-in-action/images/Figure%209.3%20ServerBootstrap.jpg">
+<meta property="og:image" content="https://waylau.com/essential-netty-in-action/images/Figure%209.2%20Bootstrap%20process.jpg">
+<meta property="og:updated_time" content="2019-07-22T03:41:41.059Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dotnetty笔记">
+<meta name="twitter:description" content="DotNetty介绍DotNetty是微软的Azure团队，使用C#实现的Netty的版本发布。不但使用了C#和.Net平台的技术特点，并且保留了Netty原来绝大部分的编程接口。让我们在使用时，完全可以依照Netty官方的教程来学习和使用DotNetty应用程序。 dotNetty 是一个非阻塞、事件驱动的网络框架。dotNetty 实际上是使用 Threads（多线程）处理 I/O 事件,Do">
+<meta name="twitter:image" content="https://7n.w3cschool.cn/attachments/image/wk/netty4userguide/4.1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2018/10/09/2018-10-dotnetty-note/">
+
+
+
+
+
+  <title>Dotnetty笔记 | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2018/10/09/2018-10-dotnetty-note/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Dotnetty笔记</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T19:16:57+08:00">
+                2018-10-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-22T11:41:41+08:00">
+                2019-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog-deploy/categories/网络框架/" itemprop="url" rel="index">
+                    <span itemprop="name">网络框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="DotNetty介绍"><a href="#DotNetty介绍" class="headerlink" title="DotNetty介绍"></a>DotNetty介绍</h2><p>DotNetty是微软的Azure团队，使用C#实现的<code>Netty</code>的版本发布。不但使用了C#和.Net平台的技术特点，并且保留了<code>Netty</code>原来绝大部分的编程接口。让我们在使用时，完全可以依照<code>Netty</code>官方的教程来学习和使用DotNetty应用程序。</p>
+<p>dotNetty 是一个非阻塞、事件驱动的网络框架。dotNetty 实际上是使用 Threads（多线程）处理 I/O 事件,<code>DotNetty</code>是一个<code>NIO</code>客户端服务端框架，它使得快速而简单的开发像服务端客户端协议的网络应用成为了可能。它极大的简化并流线化了如<code>TCP</code>和<code>UDP</code>套接字服务器开发的网络编程。<code>dotNetty</code>成功找到了一个无需折衷妥协而让开发、性能、稳定性和灵活性相互协调的方法。</p>
+<h2 id="类库简介"><a href="#类库简介" class="headerlink" title="类库简介"></a>类库简介</h2><ol>
+<li>DotNetty.Buffers     <ul>
+<li>对内存缓冲区管理的封装。</li>
+</ul>
+</li>
+<li>DotNetty.Codecs   <ul>
+<li>对编解码是封装，包括一些基础基类的实现，在项目中自定义的协议，都要继承该项目的特定基类和实现。</li>
+</ul>
+</li>
+<li>DotNetty.Codecs.Mqtt<ul>
+<li><code>MQTT</code>（消息队列遥测传输）编解码是封装，包括一些基础基类的实现。</li>
+</ul>
+</li>
+<li>DotNetty.Codecs.Protobuf<ul>
+<li><code>Protobuf</code>编解码是封装，包括一些基础基类的实现。</li>
+</ul>
+</li>
+<li>DotNetty.Codecs.ProtocolBuffers<ul>
+<li><code>ProtocolBuffers</code>编解码是封装，包括一些基础基类的实现。</li>
+</ul>
+</li>
+<li>DotNetty.Codecs.Redis<ul>
+<li><code>Redis</code>协议编解码是封装，包括一些基础基类的实现。</li>
+</ul>
+</li>
+<li>DotNetty.Common<ul>
+<li>是公共的类库项目，包装线程池，并行任务和常用帮助类的封装。</li>
+</ul>
+</li>
+<li>DotNetty.Handlers<ul>
+<li>封装了常用的管道处理器，比如<code>Tls</code>编解码，超时机制，心跳检查，日志等。</li>
+</ul>
+</li>
+<li>DotNetty.Transport<ul>
+<li>是<code>DotNetty</code>核心的实现，<code>Socket</code>基础框架，通信模式：异步非阻塞。</li>
+</ul>
+</li>
+<li>DotNetty.Transport.Libuv<ul>
+<li>是<code>DotNetty</code>自己实现基于<code>Libuv</code> （高性能的，事件驱动的I/O库） 核心的实现。</li>
+</ul>
+</li>
+</ol>
+<h2 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h2><p><img src="https://7n.w3cschool.cn/attachments/image/wk/netty4userguide/4.1.png" alt="架构图"></p>
+<h2 id="DotNetty核心概念"><a href="#DotNetty核心概念" class="headerlink" title="DotNetty核心概念"></a>DotNetty核心概念</h2><h3 id="BOOTSTRAP"><a href="#BOOTSTRAP" class="headerlink" title="BOOTSTRAP"></a>BOOTSTRAP</h3><p><code>DotNetty</code> 应用程序通过设置 <code>Bootstrap</code>（引导）类的开始，该类提供了一个用于应用程序网络层配置的容器。</p>
+<h3 id="CHANNEL"><a href="#CHANNEL" class="headerlink" title="CHANNEL"></a>CHANNEL</h3><p>底层网络传输API必须提供给应用 I/O操作的接口，如读，写，连接，绑定等等。对于我们来说，这是结构几乎总是会成为一个“socket”。<br><code>DotNetty</code> 中的接口<code>Channel</code> 定义了与 socket 丰富交互的操作集：<code>bind</code>, <code>close</code>, <code>config</code>, <code>connect</code>, <code>isActive</code>, <code>isOpen</code>, <code>isWritable</code>, <code>read</code>, <code>write</code> 等等。 <code>DotNetty</code> 提供大量的 <code>Channel</code> 实现来专门使用。这些包括 <code>AbstractChannel</code>，<code>AbstractNioByteChannel</code>，<code>AbstractNioChannel</code>，<code>EmbeddedChannel</code>， <code>LocalServerChannel</code>，<code>NioSocketChannel</code> 等等。</p>
+<h3 id="CHANNELHANDLER"><a href="#CHANNELHANDLER" class="headerlink" title="CHANNELHANDLER"></a>CHANNELHANDLER</h3><p><code>ChannelHandler</code> 支持很多协议，并且提供用于数据处理的容器。我们已经知道<code>ChannelHandler</code> 由特定事件触发。 <code>ChannelHandler</code> 可专用于几乎所有的动作，包括将一个对象转为字节（或相反），执行过程中抛出的异常处理。</p>
+<p>常用的一个接口是 <code>ChannelInboundHandler</code>，这个类型接收到入站事件（包括接收到的数据）可以处理应用程序逻辑。当你需要提供响应时，你也可以从 <code>ChannelInboundHandler</code> 冲刷数据。一句话，业务逻辑经常存活于一个或者多个 <code>ChannelInboundHandler</code>。</p>
+<h3 id="CHANNELPIPELINE"><a href="#CHANNELPIPELINE" class="headerlink" title="CHANNELPIPELINE"></a>CHANNELPIPELINE</h3><p><code>ChannelPipeline</code> 提供了一个容器给 <code>ChannelHandler</code> 链并提供了一个API 用于管理沿着链入站和出站事件的流动。每个 <code>Channel</code> 都有自己的<code>ChannelPipeline</code>，当<code>Channel</code> 创建时自动创建的。 <code>ChannelHandler</code> 是如何安装在 <code>ChannelPipeline</code>？ 主要是实现了<code>ChannelHandler</code> 的抽象 <code>ChannelInitializer</code>。<code>ChannelInitializer</code>子类 通过 <code>ServerBootstrap</code> 进行注册。当它的方法 <code>InitChannel()</code> 被调用时，这个对象将安装自定义的 <code>ChannelHandler</code> 集到 <code>pipeline</code>。当这个操作完成时，<code>ChannelInitializer</code> 子类则 从 <code>ChannelPipeline</code> 自动删除自身。</p>
+<h3 id="EVENTLOOP"><a href="#EVENTLOOP" class="headerlink" title="EVENTLOOP"></a>EVENTLOOP</h3><p><code>EventLoop</code> 用于处理 <code>Channel</code> 的 I/O 操作。一个单一的 <code>EventLoop</code>通常会处理多个 <code>Channel</code> 事件。一个 <code>EventLoopGroup</code> 可以含有多于一个的<code>EventLoop</code> 和 提供了一种迭代用于检索清单中的下一个。</p>
+<h3 id="CHANNELFUTURE"><a href="#CHANNELFUTURE" class="headerlink" title="CHANNELFUTURE"></a>CHANNELFUTURE</h3><p><code>DotNetty</code> 所有的 I/O 操作都是异步。因为一个操作可能无法立即返回，我们需要有一种方法在以后确定它的结果。出于这个目的，dotNetty 提供了接口 <code>ChannelFuture</code>,它的 <code>AddListener</code> 方法注册了一个 <code>ChannelFutureListener</code> ，当操作完成时，可以被通知（不管成功与否）。</p>
+<h2 id="引导"><a href="#引导" class="headerlink" title="引导"></a>引导</h2><h3 id="Bootstrap-类型"><a href="#Bootstrap-类型" class="headerlink" title="Bootstrap 类型"></a>Bootstrap 类型</h3><p><code>DotNetty</code>的包括两种不同类型的引导。 两个引导实现自一个名为<code>AbstractBootstrap</code>的超类。</p>
+<h4 id="服务端引导"><a href="#服务端引导" class="headerlink" title="服务端引导"></a>服务端引导</h4><p>“服务器”应用程序把一个“父”管道接受连接和创建“子”管道,<code>ServerBootstrap</code> 中的 <code>ChildHandler()</code>, <code>ChildAttr()</code> 和 <code>ChildOption()</code> 是常用的服务器应用的操作。具体来说,<code>ServerChannel</code>实现负责创建子 <code>Channel</code>,它代表接受连接。因此 引导 <code>ServerChannel</code> 的 <code>ServerBootstrap</code> ,提供这些方法来简化接收的 <code>Channel</code> 对 <code>ChannelConfig</code> 应用设置的任务。<br>下图展示了服务端是如何工作的<br><img src="https://waylau.com/essential-netty-in-action/images/Figure%209.3%20ServerBootstrap.jpg" alt="服务引导"></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主工作线程组，设置为1个线程</span></span><br><span class="line">    <span class="keyword">var</span> bossGroup = <span class="keyword">new</span> MultithreadEventLoopGroup(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 工作线程组，默认为内核数*2的线程数</span></span><br><span class="line">    <span class="keyword">var</span> workerGroup = <span class="keyword">new</span> MultithreadEventLoopGroup();</span><br><span class="line">    X509Certificate2 tlsCertificate = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (ServerSettings.IsSsl) <span class="comment">//如果使用加密通道</span></span><br><span class="line">            &#123;</span><br><span class="line">                tlsCertificate = <span class="keyword">new</span> X509Certificate2(Path.Combine(ExampleHelper.ProcessDirectory, <span class="string">"dotnetty.com.pfx"</span>), <span class="string">"password"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">//声明一个服务端Bootstrap，每个Netty服务端程序，都由ServerBootstrap控制，</span></span><br><span class="line">                <span class="comment">//通过链式的方式组装需要的参数</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">var</span> bootstrap = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">                bootstrap</span><br><span class="line">                    .Group(bossGroup, workerGroup) <span class="comment">// 设置主和工作线程组</span></span><br><span class="line">                    .Channel&lt;TcpServerSocketChannel&gt;() <span class="comment">// 设置通道模式为TcpSocket</span></span><br><span class="line">                    .Option(ChannelOption.SoBacklog, <span class="number">100</span>) <span class="comment">// 设置网络IO参数等，这里可以设置很多参数，当然你对网络调优和参数设置非常了解的话，你可以设置，或者就用默认参数吧</span></span><br><span class="line">                    .Handler(<span class="keyword">new</span> LoggingHandler(<span class="string">"SRV-LSTN"</span>)) <span class="comment">//在主线程组上设置一个打印日志的处理器</span></span><br><span class="line">                    .ChildHandler(<span class="keyword">new</span> ActionChannelInitializer&lt;ISocketChannel&gt;(channel =&gt;</span><br><span class="line">                    &#123; <span class="comment">//工作线程连接器 是设置了一个管道，服务端主线程所有接收到的信息都会通过这个管道一层层往下传输</span></span><br><span class="line"><span class="comment">//同时所有出栈的消息 也要这个管道的所有处理器进行一步步处理</span></span><br><span class="line">                        IChannelPipeline pipeline = channel.Pipeline;</span><br><span class="line">                        <span class="keyword">if</span> (tlsCertificate != <span class="literal">null</span>) <span class="comment">//Tls的加解密</span></span><br><span class="line">                        &#123;</span><br><span class="line">                            pipeline.AddLast(<span class="string">"tls"</span>, TlsHandler.Server(tlsCertificate));</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="comment">//日志拦截器</span></span><br><span class="line">                        pipeline.AddLast(<span class="keyword">new</span> LoggingHandler(<span class="string">"SRV-CONN"</span>));</span><br><span class="line"><span class="comment">//出栈消息，通过这个handler 在消息顶部加上消息的长度</span></span><br><span class="line">                        pipeline.AddLast(<span class="string">"framing-enc"</span>, <span class="keyword">new</span> LengthFieldPrepender(<span class="number">2</span>));</span><br><span class="line"><span class="comment">//入栈消息通过该Handler,解析消息的包长信息，并将正确的消息体发送给下一个处理Handler，该类比较常用，后面单独说明</span></span><br><span class="line">                        pipeline.AddLast(<span class="string">"framing-dec"</span>, <span class="keyword">new</span> LengthFieldBasedFrameDecoder(<span class="keyword">ushort</span>.MaxValue, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>));</span><br><span class="line"><span class="comment">//业务handler ，这里是实际处理Echo业务的Handler</span></span><br><span class="line">                        pipeline.AddLast(<span class="string">"echo"</span>, <span class="keyword">new</span> EchoServerHandler());</span><br><span class="line">                    &#125;));</span><br><span class="line">            </span><br><span class="line">        <span class="comment">// bootstrap绑定到指定端口的行为 就是服务端启动服务，同样的Serverbootstrap可以bind到多个端口</span></span><br><span class="line">                IChannel boundChannel = <span class="keyword">await</span> bootstrap.BindAsync(ServerSettings.Port);</span><br><span class="line"></span><br><span class="line"><span class="comment">//关闭服务</span></span><br><span class="line">                <span class="keyword">await</span> boundChannel.CloseAsync();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">finally</span></span><br><span class="line">            &#123;</span><br><span class="line"><span class="comment">//释放工作组线程</span></span><br><span class="line">                <span class="keyword">await</span> Task.WhenAll(</span><br><span class="line">                    bossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(<span class="number">100</span>), TimeSpan.FromSeconds(<span class="number">1</span>)),</span><br><span class="line">                    workerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(<span class="number">100</span>), TimeSpan.FromSeconds(<span class="number">1</span>)));</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>创建要给新的 <code>ServerBootstrap</code> 来创建新的 <code>SocketChannel</code> 管道并绑定他们</li>
+<li>指定 <code>EventLoopGroup</code> 用于从注册的 <code>ServerChannel</code> 中获取<code>EventLoop</code> 和接收到的管道</li>
+<li>指定要使用的管道类</li>
+<li>设置子处理器用于处理接收的管道的 I/O 和数据</li>
+<li>通过配置引导来绑定管道</li>
+</ol>
+<h4 id="客户端引导"><a href="#客户端引导" class="headerlink" title="客户端引导"></a>客户端引导</h4><p>“客户端”很可能只需要一个单一的、非“父”对所有网络交互的管道。</p>
+<ul>
+<li>如何引导客户端？<br><code>Bootstrap</code>类负责创建管道给客户或应用程序，利用无连接协议和在调用 <code>Bind()</code> 或 <code>Connect()</code> 之后。<br>下图展示了如何工作<br><img src="https://waylau.com/essential-netty-in-action/images/Figure%209.2%20Bootstrap%20process.jpg" alt="客户端引导"><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">group</span> = <span class="keyword">new</span> MultithreadEventLoopGroup();</span><br><span class="line"></span><br><span class="line">            X509Certificate2 cert = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">string</span> targetHost = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">if</span> (ClientSettings.IsSsl)</span><br><span class="line">            &#123;</span><br><span class="line">                cert = <span class="keyword">new</span> X509Certificate2(Path.Combine(ExampleHelper.ProcessDirectory, <span class="string">"dotnetty.com.pfx"</span>), <span class="string">"password"</span>);</span><br><span class="line">                targetHost = cert.GetNameInfo(X509NameType.DnsName, <span class="literal">false</span>);</span><br><span class="line">            &#125;</span><br><span class="line"><span class="keyword">var</span> bootstrap = <span class="keyword">new</span> Bootstrap();</span><br><span class="line">                bootstrap</span><br><span class="line">                    .Group(<span class="keyword">group</span>)</span><br><span class="line">                    .Channel&lt;TcpSocketChannel&gt;()</span><br><span class="line">                    .Option(ChannelOption.TcpNodelay, <span class="literal">true</span>)</span><br><span class="line">                    .Handler(<span class="keyword">new</span> ActionChannelInitializer&lt;ISocketChannel&gt;(channel =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        IChannelPipeline pipeline = channel.Pipeline;</span><br><span class="line"></span><br><span class="line">                        <span class="keyword">if</span> (cert != <span class="literal">null</span>)</span><br><span class="line">                        &#123;</span><br><span class="line">                            pipeline.AddLast(<span class="string">"tls"</span>, <span class="keyword">new</span> TlsHandler(stream =&gt; <span class="keyword">new</span> SslStream(stream, <span class="literal">true</span>, (sender, certificate, chain, errors) =&gt; <span class="literal">true</span>), <span class="keyword">new</span> ClientTlsSettings(targetHost)));</span><br><span class="line">                        &#125;</span><br><span class="line">                        pipeline.AddLast(<span class="keyword">new</span> LoggingHandler());</span><br><span class="line">                        pipeline.AddLast(<span class="string">"framing-enc"</span>, <span class="keyword">new</span> LengthFieldPrepender(<span class="number">2</span>));</span><br><span class="line">                        pipeline.AddLast(<span class="string">"framing-dec"</span>, <span class="keyword">new</span> LengthFieldBasedFrameDecoder(<span class="keyword">ushort</span>.MaxValue, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">                        pipeline.AddLast(<span class="string">"echo"</span>, <span class="keyword">new</span> EchoClientHandler());</span><br><span class="line">                    &#125;));</span><br><span class="line"></span><br><span class="line">                IChannel clientChannel = <span class="keyword">await</span> bootstrap.ConnectAsync(<span class="keyword">new</span> IPEndPoint(ClientSettings.Host, ClientSettings.Port));</span><br><span class="line"></span><br><span class="line">                <span class="keyword">await</span> clientChannel.CloseAsync();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>创建一个新的 Bootstrap 来创建和连接到新的客户端管道</li>
+<li>指定 EventLoopGroup</li>
+<li>指定 Channel 实现来使用</li>
+<li>设置处理器给 Channel 的事件和数据</li>
+<li>连接到远端主机</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://waylau.com/essential-netty-in-action/" target="_blank" rel="noopener">Netty 实战(精髓)</a></li>
+<li><a href="https://waylau.gitbooks.io/netty-4-user-guide/content/" target="_blank" rel="noopener">Netty 4.x 用户指南</a></li>
+<li><a href="https://www.cnblogs.com/syxlb/p/8484698.html" target="_blank" rel="noopener">DotNetty项目基本了解和介绍</a></li>
+<li><a href="https://blog.csdn.net/z69183787/article/category/6412734/1" target="_blank" rel="noopener">Netty源码解析</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/开源框架/" rel="tag"># 开源框架</a>
+          
+            <a href="/hexo-blog-deploy/tags/网络通信/" rel="tag"># 网络通信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/10/06/2018-10-design-discipline-note/" rel="next" title="设计原则">
+                <i class="fa fa-chevron-left"></i> 设计原则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/10/11/2018-10-design-pattern-singleton-note/" rel="prev" title="设计模式之单例模式">
+                设计模式之单例模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DotNetty介绍"><span class="nav-number">1.</span> <span class="nav-text">DotNetty介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类库简介"><span class="nav-number">2.</span> <span class="nav-text">类库简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构图"><span class="nav-number">3.</span> <span class="nav-text">架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DotNetty核心概念"><span class="nav-number">4.</span> <span class="nav-text">DotNetty核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BOOTSTRAP"><span class="nav-number">4.1.</span> <span class="nav-text">BOOTSTRAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHANNEL"><span class="nav-number">4.2.</span> <span class="nav-text">CHANNEL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHANNELHANDLER"><span class="nav-number">4.3.</span> <span class="nav-text">CHANNELHANDLER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHANNELPIPELINE"><span class="nav-number">4.4.</span> <span class="nav-text">CHANNELPIPELINE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EVENTLOOP"><span class="nav-number">4.5.</span> <span class="nav-text">EVENTLOOP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHANNELFUTURE"><span class="nav-number">4.6.</span> <span class="nav-text">CHANNELFUTURE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引导"><span class="nav-number">5.</span> <span class="nav-text">引导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bootstrap-类型"><span class="nav-number">5.1.</span> <span class="nav-text">Bootstrap 类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端引导"><span class="nav-number">5.1.1.</span> <span class="nav-text">服务端引导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端引导"><span class="nav-number">5.1.2.</span> <span class="nav-text">客户端引导</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

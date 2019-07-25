@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="微服务,分布式系统,服务发现,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Consul简介consul介绍consul 是Google开源的，使用go语言开发的一个服务发现、配置管理服务的一个工具。内置了 服务注册与发现框架、分布一致性协议实现、健康检查、Key/Value存储、多数据中心方案，不再需要依赖其他工具（比如ZooKeeper等）。服务部署简单，只有一个可运行的二进制的包。 几个关键的功能介绍(作用):  服务发现: Consul的某些客户端可以提供一个服务">
+<meta name="keywords" content="微服务,分布式系统,服务发现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="consul笔记">
+<meta property="og:url" content="https://liuhll.github.io/2018/09/24/2018-09-consul/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="Consul简介consul介绍consul 是Google开源的，使用go语言开发的一个服务发现、配置管理服务的一个工具。内置了 服务注册与发现框架、分布一致性协议实现、健康检查、Key/Value存储、多数据中心方案，不再需要依赖其他工具（比如ZooKeeper等）。服务部署简单，只有一个可运行的二进制的包。 几个关键的功能介绍(作用):  服务发现: Consul的某些客户端可以提供一个服务">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.consul.io/assets/images/consul-arch-420ce04a.png">
+<meta property="og:updated_time" content="2019-07-22T03:41:41.028Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="consul笔记">
+<meta name="twitter:description" content="Consul简介consul介绍consul 是Google开源的，使用go语言开发的一个服务发现、配置管理服务的一个工具。内置了 服务注册与发现框架、分布一致性协议实现、健康检查、Key/Value存储、多数据中心方案，不再需要依赖其他工具（比如ZooKeeper等）。服务部署简单，只有一个可运行的二进制的包。 几个关键的功能介绍(作用):  服务发现: Consul的某些客户端可以提供一个服务">
+<meta name="twitter:image" content="https://www.consul.io/assets/images/consul-arch-420ce04a.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2018/09/24/2018-09-consul/">
+
+
+
+
+
+  <title>consul笔记 | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2018/09/24/2018-09-consul/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">consul笔记</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-24T01:53:10+08:00">
+                2018-09-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-22T11:41:41+08:00">
+                2019-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog-deploy/categories/微服务/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Consul简介"><a href="#Consul简介" class="headerlink" title="Consul简介"></a>Consul简介</h2><h3 id="consul介绍"><a href="#consul介绍" class="headerlink" title="consul介绍"></a>consul介绍</h3><p><code>consul</code> 是Google开源的，使用go语言开发的一个<em>服务发现</em>、<em>配置管理服务</em>的一个工具。内置了 <strong>服务注册与发现框架</strong>、<strong>分布一致性协议实现</strong>、<strong>健康检查</strong>、<strong>Key/Value存储</strong>、<strong>多数据中心方案</strong>，不再需要依赖其他工具（比如<code>ZooKeeper</code>等）。服务部署简单，只有一个可运行的二进制的包。</p>
+<p>几个关键的功能介绍(作用):</p>
+<ul>
+<li><strong>服务发现</strong>: <code>Consul</code>的某些客户端可以提供一个服务，例如<code>api</code>或者<code>mysql</code>，其它客户端可以使用Consul去发现这个服务的提供者。使用DNS或者HTTP，应用可以很容易的找到他们所依赖的服务。</li>
+<li><strong>健康检查</strong>: Consul客户端可以提供一些健康检查，这些健康检查可以关联到一个指定的服务（服务是否返回200 OK），也可以关联到本地节点（内存使用率是否在90%以下）。这些信息可以被一个操作员用来监控集群的健康状态，被服务发现组件路由时用来远离不健康的主机。</li>
+<li><strong>健值(Key/Value)存储</strong>: 应用可以使用Consul提供的分层键值存储用于一些目的，包括 <strong>动态配置</strong> 、<strong>特征标记</strong>、<strong>协作</strong>、<strong>leader选举</strong>等等。通过一个简单的HTTP API可以很容易的使用这个组件。</li>
+<li><strong>多数据中心</strong>: Consul对多数据中心有非常好的支持，这意味着Consul用户不必担心由于创建更多抽象层而产生的多个区域。</li>
+</ul>
+<h3 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h3><p>每个节点都需要运行<code>agent</code>，他有两种运行模式<code>server</code>和<code>client</code>。每个数据中心官方建议需要3或5个<code>server</code>节点以保证数据安全，同时保证<code>server-leader</code>的选举能够正确的进行。</p>
+<h4 id="client"><a href="#client" class="headerlink" title="@client"></a>@client</h4><p>CLIENT表示consul的<code>client模式</code>，就是客户端模式。是consul节点的一种模式，这种模式下，所有注册到当前节点的服务会被转发到<code>SERVER</code>，本身是不持久化这些信息。</p>
+<h4 id="server"><a href="#server" class="headerlink" title="@server"></a>@server</h4><p>SERVER表示consul的server模式，表明这个consul是个<code>server</code>，这种模式下，功能和<code>CLIENT</code>都一样，唯一不同的是，它会把所有的信息持久化的本地，这样遇到故障，信息是可以被保留的</p>
+<h4 id="server-leader"><a href="#server-leader" class="headerlink" title="@server-leader"></a>@server-leader</h4><p>中间那个<code>SERVER</code>下面有<code>LEADER</code>的字眼，表明这个<code>SERVER</code>是它们的老大，它和其它<code>SERVER</code>不一样的一点是，<strong>它需要负责同步注册的信息给其它的SERVER，同时也要负责各个节点的健康监测。</strong></p>
+<h4 id="raft"><a href="#raft" class="headerlink" title="@raft"></a>@raft</h4><p>server节点之间的数据一致性保证，一致性协议使用的是<code>raft</code>协议。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="1-通过choco工具安装"><a href="#1-通过choco工具安装" class="headerlink" title="1.通过choco工具安装"></a>1.通过<code>choco</code>工具安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco install -y consul</span><br></pre></td></tr></table></figure>
+<h3 id="2-官方安装"><a href="#2-官方安装" class="headerlink" title="2. 官方安装"></a>2. 官方安装</h3><p>从<a href="https://www.consul.io/downloads.html" target="_blank" rel="noopener">官方下载</a> 对应系统的<code>zip</code>包,解压到安装目录，并将安装目录的路径添加到环境变量<code>PATH</code>中。 </p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>完成<code>consul</code>安装之后必须运行<code>agent</code>,<code>agent</code> 可以运行<code>server</code>或<code>client</code>模式。每个数据中心至少必须拥有一台<code>server</code>， 建议在一个集群中有3或者5个<code>server</code>.部署单一的<code>server</code>,在出现失败时会不可避免的造成数据丢失。</p>
+<h3 id="运行Consul-Server"><a href="#运行Consul-Server" class="headerlink" title="运行Consul Server"></a>运行Consul Server</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul agent -server -bootstrap-expect 3 -data-dir /tmp/consul -node=s1 -bind 192.168.31.115 -ui-dir ./consul_ui/ -rejoin -config-dir=/etc/consul.d/ -client 0.0.0.0</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-server1</code>： 定义agent运行在server模式</li>
+<li><code>-bootstrap-expect</code> ：在一个datacenter中期望提供的server节点数目，当该值提供的时候，consul一直等到达到指定sever数目的时候才会引导整个集群，该标记不能和bootstrap共用</li>
+<li><code>-bind</code>：该地址用来在集群内部的通讯，集群内的所有节点到地址都必须是可达的，默认是0.0.0.0</li>
+<li><code>-node</code>：节点在集群中的名称，在一个集群中必须是唯一的，默认是该节点的主机名</li>
+<li><code>-ui-dir</code>： 提供存放web ui资源的路径，该目录必须是可读的</li>
+<li><code>-rejoin</code>：使consul忽略先前的离开，在再次启动后仍旧尝试加入集群中。</li>
+<li><code>-config-dir</code>：：配置文件目录，里面所有以.json结尾的文件都会被加载</li>
+<li><code>-client</code>：consul服务侦听地址，这个地址提供HTTP、DNS、RPC等服务，默认是127.0.0.1所以不对外提供服务，如果你要对外提供服务改成0.0.0.0</li>
+<li><code>-ui</code>： 使用默认的ui管理界面</li>
+</ul>
+<h3 id="运行Consul-Client"><a href="#运行Consul-Client" class="headerlink" title="运行Consul Client"></a>运行Consul Client</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul agent -data-dir /tmp/consul -node=c1 -bind=192.168.31.23 -config-dir=/etc/consul.d/ -join 192.168.31.115</span><br></pre></td></tr></table></figure>
+<h3 id="查看集群成员"><a href="#查看集群成员" class="headerlink" title="查看集群成员"></a>查看集群成员</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul members</span><br></pre></td></tr></table></figure>
+<h3 id="加入集群"><a href="#加入集群" class="headerlink" title="加入集群"></a>加入集群</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul join 192.168.31.115</span><br></pre></td></tr></table></figure>
+<h3 id="停止agent"><a href="#停止agent" class="headerlink" title="停止agent"></a>停止agent</h3><p>你可以使用<code>Ctrl-C</code> 优雅的关闭<code>Agent</code>. 中断<code>Agent</code>之后你可以看到他离开了集群并关闭.</p>
+<h3 id="开发模式"><a href="#开发模式" class="headerlink" title="开发模式"></a>开发模式</h3><p>开发过程中只需要简单的运行一个consul <code>Agent</code>即可,可通过如下命令实现:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul agent --dev</span><br></pre></td></tr></table></figure></p>
+<h2 id="服务注册与发现"><a href="#服务注册与发现" class="headerlink" title="服务注册与发现"></a>服务注册与发现</h2><h3 id="服务注册"><a href="#服务注册" class="headerlink" title="服务注册"></a>服务注册</h3><p>consul支持两种方式实现服务注册，一种是通过<code>consul</code>的服务注册http API，由服务自己调用API实现注册，另一种方式是通过json个是的配置文件实现注册，将需要注册的服务以json格式的配置文件给出。<code>consul</code>官方建议使用第二种方式。</p>
+<h4 id="通过Http-API注册"><a href="#通过Http-API注册" class="headerlink" title="通过Http API注册"></a>通过Http API注册</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/v1/agent/service/register -PUT</span><br></pre></td></tr></table></figure>
+<h4 id="通过配置文件注册文件"><a href="#通过配置文件注册文件" class="headerlink" title="通过配置文件注册文件"></a>通过配置文件注册文件</h4><ol>
+<li><p>将注册的服务写到 <code>consul</code>配置目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo '&#123;"service": &#123;"name": "web", "tags": ["rails"], "port": 80&#125;&#125;' &gt;/etc/consul.d/web.json</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动consul服务时,指定配置目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-config-dir=/etc/consul.d/</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h3><p>consul支持两种方式实现服务发现，一种是通过<code>http API</code>来查询有哪些服务，另外一种是通过<code>consul agent</code> 自带的<code>DNS</code>（8600端口），域名是以<code>NAME.service.consul</code>的形式给出，<code>NAME</code>即在定义的服务配置文件中服务的名称。<code>DNS方式</code>可以通过<code>check</code>的方式检查服务。</p>
+<p>例如: 已经向consul集群中注册了一个服务名为<code>Web</code>的服务，那么他的域名是<code>web.service.consul</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig @127.0.0.1 -p 8600 web.service.consul</span><br></pre></td></tr></table></figure>
+<h4 id="Http-API"><a href="#Http-API" class="headerlink" title="Http API"></a>Http API</h4><ol>
+<li><p>查询制定服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl 127.0.0.1:8500/v1/catalog/service/web</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过目录API给出所有节点提供的服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl 127.0.0.1:8500/v1/catalog/service/web?passing</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="DNS-API"><a href="#DNS-API" class="headerlink" title="DNS API"></a>DNS API</h4><p>DNS API中,服务的DNS名字是 <code>NAME.service.consul</code>. 虽然是可配置的,但默认的所有DNS名字会都在consul命名空间下.这个子域告诉Consul,我们在查询服务,<code>NAME</code>则是服务的名称。</p>
+<h2 id="健康检查"><a href="#健康检查" class="headerlink" title="健康检查"></a>健康检查</h2><p>健康检查是服务发现的关键组件.预防使用到不健康的服务</p>
+<h3 id="自定义检查"><a href="#自定义检查" class="headerlink" title="自定义检查"></a>自定义检查</h3><p>使用和检查定义来注册检查，和服务类似,因为这是建立检查最常用的方式</p>
+<p>通过配置服务下的<code>check</code>节点自定义检查:<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"service"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"Faceid"</span>,</span><br><span class="line">    <span class="attr">"tags"</span>: [<span class="string">"extract"</span>, <span class="string">"verify"</span>, <span class="string">"compare"</span>, <span class="string">"idcard"</span>],</span><br><span class="line">    <span class="attr">"address"</span>: <span class="string">"10.201.102.198"</span>,</span><br><span class="line">    <span class="attr">"port"</span>: <span class="number">9000</span>,</span><br><span class="line">    <span class="attr">"check"</span>: &#123;</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"ping"</span>,</span><br><span class="line">        <span class="attr">"script"</span>: <span class="string">"curl -s localhost:9000"</span>,</span><br><span class="line">        <span class="attr">"interval"</span>: <span class="string">"3s"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="K-V"><a href="#K-V" class="headerlink" title="K/V"></a>K/V</h2><p>Consul提供了一个易用的键/值存储,这可以用来 <strong>保持动态配置</strong> ,<strong>协助服务协调</strong>,<strong>领袖选举</strong>,做开发者可以想到的任何事情<br>可以通过Http API <code>v1/kv/?{key}</code>来获取设置获取KEY/VALUE的存储与设置</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>consul只有一个命令行应用，就是<code>consul</code>命令，consul命令可以包含<code>agent</code>、<code>members</code>等参数进行使用,<code>consul -h</code>即可看到consul cli所支持的参数，而每个参数里面又支持其他参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@consul ~]# consul</span><br><span class="line">usage: consul [--version] [--help] &lt;command&gt; [&lt;args&gt;]</span><br><span class="line">Available commands are:</span><br><span class="line">    agent          Runs a Consul agent  运行一个consul agent</span><br><span class="line">    configtest     Validate config file</span><br><span class="line">    event          Fire a new event</span><br><span class="line">    exec           Executes a command on Consul nodes  在consul节点上执行一个命令</span><br><span class="line">    force-leave    Forces a member of the cluster to enter the "left" state   强制节点成员在集群中的状态转换到left状态</span><br><span class="line">    info           Provides debugging information for operators  提供操作的debug级别的信息</span><br><span class="line">    join           Tell Consul agent to join cluster   加入consul节点到集群中</span><br><span class="line">    keygen         Generates a new encryption key  生成一个新的加密key</span><br><span class="line">    keyring        Manages gossip layer encryption keys</span><br><span class="line">    kv             Interact with the key-value store</span><br><span class="line">    leave          Gracefully leaves the Consul cluster and shuts down</span><br><span class="line">    lock           Execute a command holding a lock</span><br><span class="line">    maint          Controls node or service maintenance mode</span><br><span class="line">    members        Lists the members of a Consul cluster    列出集群中成员</span><br><span class="line">    monitor        Stream logs from a Consul agent  打印consul节点的日志信息</span><br><span class="line">    operator       Provides cluster-level tools for Consul operators</span><br><span class="line">    reload         Triggers the agent to reload configuration files   触发节点重新加载配置文件</span><br><span class="line">    rtt            Estimates network round trip time between nodes</span><br><span class="line">    snapshot       Saves, restores and inspects snapshots of Consul server state</span><br><span class="line">    version        Prints the Consul version    打印consul的版本信息</span><br><span class="line">    watch          Watch for changes in Consul   监控consul的改变</span><br></pre></td></tr></table></figure>
+<h3 id="Agent"><a href="#Agent" class="headerlink" title="Agent"></a>Agent</h3><p><code>agent</code>指令是consul的核心，它运行<code>agent</code>来维护成员的重要信息、运行检查、服务宣布、查询处理等等</p>
+<h3 id="event"><a href="#event" class="headerlink" title="event"></a>event</h3><p><code>event</code>命令提供了一种机制，用来<code>fire</code>自定义的用户事件，这些事件对consul来说是不透明的，但它们可以用来构建自动部署、重启服务或者其他行动的脚本。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-http-addr：http服务的地址，agent可以链接上来发送命令，如果没有设置，则默认是127.0.0.1:8500。</span><br><span class="line">-datacenter：数据中心。</span><br><span class="line">-name：事件的名称</span><br><span class="line">-node：一个正则表达式，用来过滤节点</span><br><span class="line">-service：一个正则表达式，用来过滤节点上匹配的服务</span><br><span class="line">-tag：一个正则表达式，用来过滤节点上符合tag的服务，必须和-service一起使用。</span><br></pre></td></tr></table></figure>
+<h3 id="exec"><a href="#exec" class="headerlink" title="exec"></a>exec</h3><p><code>exec</code>指令提供了一种远程执行机制，比如你要在所有的机器上执行<code>uptime</code>命令，远程执行的工作通过<code>job</code>来指定，存储在KV中，<code>agent</code>使用<code>event</code>系统可以快速的知道有新的job产生，消息是通过gossip协议来传递的，因此消息传递是最佳的，但是并不保证命令的执行。事件通过gossip来驱动，远程执行依赖KV存储系统(就像消息代理一样)。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-http-addr：http服务的地址，agent可以链接上来发送命令，如果没有设置，则默认是127.0.0.1:8500。</span><br><span class="line">-datacenter：数据中心。</span><br><span class="line">-prefix：key在KV系统中的前缀，用来存储请求数据，默认是_rexec</span><br><span class="line">-node：一个正则表达式，用来过滤节点，评估事件</span><br><span class="line">-service：一个正则表达式，用来过滤节点上匹配的服务</span><br><span class="line">-tag：一个正则表达式，用来过滤节点上符合tag的服务，必须和-service一起使用。</span><br><span class="line">-wait：在节点多长时间没有响应后，认为job已经完成。</span><br><span class="line">-wait-repl：</span><br><span class="line">-verbose：输出更多信息</span><br></pre></td></tr></table></figure>
+<h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><p><code>join</code>指令告诉<code>consul agent</code>加入一个已经存在的集群中，一个新的<code>consul agent</code>必须加入一个已经有至少一个成员的集群中，这样它才能加入已经存在的集群中，如果你不加入一个已经存在的集群，则agent是它自身集群的一部分，其他<code>agent</code>则可以加入进来。<code>agents</code>可以加入其他<code>agent</code>多次。<code>consul join [options] address</code>。如果你想加入多个集群，则可以写多个地址，consul会加入所有的地址。</p>
+<h3 id="leave"><a href="#leave" class="headerlink" title="leave"></a>leave</h3><p><code>leave</code>指令触发一个优雅的离开动作并关闭<code>agent</code>，节点离开后不会尝试重新加入集群中。运行在<code>server</code>状态的节点，节点会被优雅的删除，这是很严重的，<strong>在某些情况下一个不优雅的离开会影响到集群的可用性</strong>。</p>
+<h3 id="members"><a href="#members" class="headerlink" title="members"></a>members</h3><p><code>members</code>指令输出<code>consul agent</code>目前所知道的所有的成员以及它们的状态，节点的状态只有<code>alive</code>、<code>left</code>、<code>failed</code>三种状态。</p>
+<h3 id="monitor"><a href="#monitor" class="headerlink" title="monitor"></a>monitor</h3><p><code>monitor</code>指令用来链接运行的<code>agent</code>，并显示日志。<code>monitor</code>会显示最近的日志，并持续的显示日志流，不会自动退出，除非你手动或者远程<code>agent</code>自己退出。</p>
+<h3 id="reload"><a href="#reload" class="headerlink" title="reload"></a>reload</h3><p><code>reload</code>指令可以重新加载<code>agent</code>的配置文件。SIGHUP指令在重新加载配置文件时使用，任何重新加载的错误都会写在<code>agent</code>的<code>log</code>文件中，并不会打印到屏幕。</p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><p><code>watch</code>指令提供了一个机制，用来监视实际数据视图的改变(节点列表、成员服务、KV)，如果没有指定进程，当前值会被dump出来</p>
+<h2 id="Consul-配置"><a href="#Consul-配置" class="headerlink" title="Consul 配置"></a>Consul 配置</h2><p><code>agent</code>有各种各样的配置项可以在命令行或者配置文件进行定义，所有的配置项都是可选择的，当加载配置文件的时候，consul从配置文件或者配置目录加载配置。后面定义的配置会合并前面定义的配置，但是大多数情况下，合并的意思是后面定义的配置会覆盖前面定义的配置。</p>
+<h3 id="详细的配置文件参数"><a href="#详细的配置文件参数" class="headerlink" title="详细的配置文件参数"></a>详细的配置文件参数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">acl_datacenter：只用于server，指定的datacenter的权威ACL信息，所有的servers和datacenter必须同意ACL datacenter</span><br><span class="line">acl_default_policy：默认是allow</span><br><span class="line">acl_down_policy：</span><br><span class="line">acl_master_token：</span><br><span class="line">acl_token：agent会使用这个token和consul server进行请求</span><br><span class="line">acl_ttl：控制TTL的cache，默认是30s</span><br><span class="line">addresses：一个嵌套对象，可以设置以下key：dns、http、rpc</span><br><span class="line">advertise_addr：等同于-advertise</span><br><span class="line">bootstrap：等同于-bootstrap</span><br><span class="line">bootstrap_expect：等同于-bootstrap-expect</span><br><span class="line">bind_addr：等同于-bind</span><br><span class="line">ca_file：提供CA文件路径，用来检查客户端或者服务端的链接</span><br><span class="line">cert_file：必须和key_file一起</span><br><span class="line">check_update_interval：</span><br><span class="line">client_addr：等同于-client</span><br><span class="line">datacenter：等同于-dc</span><br><span class="line">data_dir：等同于-data-dir</span><br><span class="line">disable_anonymous_signature：在进行更新检查时禁止匿名签名</span><br><span class="line">disable_remote_exec：禁止支持远程执行，设置为true，agent会忽视所有进入的远程执行请求</span><br><span class="line">disable_update_check：禁止自动检查安全公告和新版本信息</span><br><span class="line">dns_config：是一个嵌套对象，可以设置以下参数：allow_stale、max_stale、node_ttl 、service_ttl、enable_truncate</span><br><span class="line">domain：默认情况下consul在进行DNS查询时，查询的是consul域，可以通过该参数进行修改</span><br><span class="line">enable_debug：开启debug模式</span><br><span class="line">enable_syslog：等同于-syslog</span><br><span class="line">encrypt：等同于-encrypt</span><br><span class="line">key_file：提供私钥的路径</span><br><span class="line">leave_on_terminate：默认是false，如果为true，当agent收到一个TERM信号的时候，它会发送leave信息到集群中的其他节点上。</span><br><span class="line">log_level：等同于-log-level</span><br><span class="line">node_name:等同于-node</span><br><span class="line">ports：这是一个嵌套对象，可以设置以下key：dns(dns地址：8600)、http(http api地址：8500)、rpc(rpc:8400)、serf_lan(lan port:8301)、serf_wan(wan port:8302)、server(server rpc:8300)</span><br><span class="line">protocol：等同于-protocol</span><br><span class="line">recursor：</span><br><span class="line">rejoin_after_leave：等同于-rejoin</span><br><span class="line">retry_join：等同于-retry-join</span><br><span class="line">retry_interval：等同于-retry-interval</span><br><span class="line">server：等同于-server</span><br><span class="line">server_name：会覆盖TLS CA的node_name，可以用来确认CA name和hostname相匹配</span><br><span class="line">skip_leave_on_interrupt：和leave_on_terminate比较类似，不过只影响当前句柄</span><br><span class="line">start_join：一个字符数组提供的节点地址会在启动时被加入</span><br><span class="line">statsd_addr：</span><br><span class="line">statsite_addr：</span><br><span class="line">syslog_facility：当enable_syslog被提供后，该参数控制哪个级别的信息被发送，默认Local0</span><br><span class="line">ui_dir：等同于-ui-dir</span><br><span class="line">verify_incoming：默认false，如果为true，则所有进入链接都需要使用TLS，需要客户端使用ca_file提供ca文件，只用于consul server端，因为client从来没有进入的链接</span><br><span class="line">verify_outgoing：默认false，如果为true，则所有出去链接都需要使用TLS，需要服务端使用ca_file提供ca文件，consul server和client都需要使用，因为两者都有出去的链接</span><br><span class="line">watches：watch一个详细名单</span><br></pre></td></tr></table></figure>
+<h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><p>consul的主要接口是RESTful HTTP API，该API可以用来增删查改nodes、services、checks、configguration。所有的endpoints主要分为以下类别:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kv - Key/Value存储</span><br><span class="line">agent - Agent控制</span><br><span class="line">catalog - 管理nodes和services</span><br><span class="line">health - 管理健康监测</span><br><span class="line">session - Session操作</span><br><span class="line">acl - ACL创建和管理</span><br><span class="line">event - 用户Events</span><br><span class="line">status - Consul系统状态</span><br></pre></td></tr></table></figure></p>
+<h3 id="agent"><a href="#agent" class="headerlink" title="agent"></a>agent</h3><p>agent endpoints用来和本地agent进行交互，一般用来服务注册和检查注册，支持以下接口</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/v1/agent/checks : 返回本地agent注册的所有检查(包括配置文件和HTTP接口)</span><br><span class="line">/v1/agent/services : 返回本地agent注册的所有 服务</span><br><span class="line">/v1/agent/members : 返回agent在集群的gossip pool中看到的成员</span><br><span class="line">/v1/agent/self : 返回本地agent的配置和成员信息</span><br><span class="line">/v1/agent/join/&lt;address&gt; : 触发本地agent加入node</span><br><span class="line">/v1/agent/force-leave/&lt;node&gt;&gt;: 强制删除node</span><br><span class="line">/v1/agent/check/register : 在本地agent增加一个检查项，使用PUT方法传输一个json格式的数据</span><br><span class="line">/v1/agent/check/deregister/&lt;checkID&gt; : 注销一个本地agent的检查项</span><br><span class="line">/v1/agent/check/pass/&lt;checkID&gt; : 设置一个本地检查项的状态为passing</span><br><span class="line">/v1/agent/check/warn/&lt;checkID&gt; : 设置一个本地检查项的状态为warning</span><br><span class="line">/v1/agent/check/fail/&lt;checkID&gt; : 设置一个本地检查项的状态为critical</span><br><span class="line">/v1/agent/service/register : 在本地agent增加一个新的服务项，使用PUT方法传输一个json格式的数据</span><br><span class="line">/v1/agent/service/deregister/&lt;serviceID&gt; : 注销一个本地agent的服务项</span><br></pre></td></tr></table></figure>
+<h3 id="catalog"><a href="#catalog" class="headerlink" title="catalog"></a>catalog</h3><p>catalog endpoints用来注册/注销nodes、services、checks</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/v1/catalog/register : Registers a new node, service, or check</span><br><span class="line">/v1/catalog/deregister : Deregisters a node, service, or check</span><br><span class="line">/v1/catalog/datacenters : Lists known datacenters</span><br><span class="line">/v1/catalog/nodes : Lists nodes in a given DC</span><br><span class="line">/v1/catalog/services : Lists services in a given DC</span><br><span class="line">/v1/catalog/service/&lt;service&gt; : Lists the nodes in a given service</span><br><span class="line">/v1/catalog/node/&lt;node&gt; : Lists the services provided by a node</span><br></pre></td></tr></table></figure>
+<h3 id="health"><a href="#health" class="headerlink" title="health"></a>health</h3><p>health endpoints用来查询健康状况相关信息，该功能从catalog中单独分离出来<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/v1/healt/node/&lt;node&gt;: 返回node所定义的检查，可用参数?dc=</span><br><span class="line">/v1/health/checks/&lt;service&gt;: 返回和服务相关联的检查，可用参数?dc=</span><br><span class="line">/v1/health/service/&lt;service&gt;: 返回给定datacenter中给定node中service</span><br><span class="line">/v1/health/state/&lt;state&gt;: 返回给定datacenter中指定状态的服务，state可以是"any", "unknown", "passing", "warning", or "critical"，可用参数?dc=</span><br></pre></td></tr></table></figure></p>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>session endpoints用来create、update、destory、query sessions<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/v1/session/create: Creates a new session</span><br><span class="line">/v1/session/destroy/&lt;session&gt;: Destroys a given session</span><br><span class="line">/v1/session/info/&lt;session&gt;: Queries a given session</span><br><span class="line">/v1/session/node/&lt;node&gt;: Lists sessions belonging to a node</span><br><span class="line">/v1/session/list: Lists all the active sessions</span><br></pre></td></tr></table></figure></p>
+<h3 id="acl"><a href="#acl" class="headerlink" title="acl"></a>acl</h3><p>acl endpoints用来create、update、destory、query acl<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/v1/acl/create: Creates a new token with policy</span><br><span class="line">/v1/acl/update: Update the policy of a token</span><br><span class="line">/v1/acl/destroy/&lt;id&gt;: Destroys a given token</span><br><span class="line">/v1/acl/info/&lt;id&gt;: Queries the policy of a given token</span><br><span class="line">/v1/acl/clone/&lt;id&gt;: Creates a new token by cloning an existing token</span><br><span class="line">/v1/acl/list: Lists all the active tokens</span><br></pre></td></tr></table></figure></p>
+<h3 id="event-1"><a href="#event-1" class="headerlink" title="event"></a>event</h3><p>event endpoints用来fire新的events、查询已有的events<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/v1/event/fire/&lt;name&gt;: 触发一个新的event，用户event需要name和其他可选的参数，使用PUT方法</span><br><span class="line">/v1/event/list: 返回agent知道的events</span><br></pre></td></tr></table></figure></p>
+<h3 id="status"><a href="#status" class="headerlink" title="status"></a>status</h3><p>status endpoints用来或者consul 集群的信息<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/v1/status/leader : 返回当前集群的Raft leader</span><br><span class="line">/v1/status/peers : 返回当前集群中同事</span><br></pre></td></tr></table></figure></p>
+<h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><p>Consul Cluster集群架构图如下:</p>
+<p><img src="https://www.consul.io/assets/images/consul-arch-420ce04a.png" alt="架构图"></p>
+<p>为保证consul集群服务的可靠性,一般需要配置3~5个<code>server</code>, <code>client</code>集群可以配置n个(n&gt;=0),当<code>server-leader</code>问题,其他<code>server</code>会重新选举<code>server-leader</code>,从而保证集群的可靠性。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p><a href="http://www.liangxiansen.cn/2017/04/06/consul/#%E4%BD%BF%E7%94%A8consul" target="_blank" rel="noopener">Consul服务手册</a></p>
+</li>
+<li><p><a href="https://www.consul.io/intro/getting-started/install.html" target="_blank" rel="noopener">Consul官方文档</a></p>
+</li>
+<li><p><a href="http://www.consul.la/start" target="_blank" rel="noopener">Consul中文翻译</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/hexo-blog-deploy/tags/分布式系统/" rel="tag"># 分布式系统</a>
+          
+            <a href="/hexo-blog-deploy/tags/服务发现/" rel="tag"># 服务发现</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/09/26/2018-09-ocelot-note/" rel="prev" title="Ocelot笔记">
+                Ocelot笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Consul简介"><span class="nav-number">1.</span> <span class="nav-text">Consul简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#consul介绍"><span class="nav-number">1.1.</span> <span class="nav-text">consul介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础架构"><span class="nav-number">1.2.</span> <span class="nav-text">基础架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#client"><span class="nav-number">1.2.1.</span> <span class="nav-text">@client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#server"><span class="nav-number">1.2.2.</span> <span class="nav-text">@server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#server-leader"><span class="nav-number">1.2.3.</span> <span class="nav-text">@server-leader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#raft"><span class="nav-number">1.2.4.</span> <span class="nav-text">@raft</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-通过choco工具安装"><span class="nav-number">2.1.</span> <span class="nav-text">1.通过choco工具安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-官方安装"><span class="nav-number">2.2.</span> <span class="nav-text">2. 官方安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动"><span class="nav-number">3.</span> <span class="nav-text">启动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行Consul-Server"><span class="nav-number">3.1.</span> <span class="nav-text">运行Consul Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行Consul-Client"><span class="nav-number">3.2.</span> <span class="nav-text">运行Consul Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看集群成员"><span class="nav-number">3.3.</span> <span class="nav-text">查看集群成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加入集群"><span class="nav-number">3.4.</span> <span class="nav-text">加入集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停止agent"><span class="nav-number">3.5.</span> <span class="nav-text">停止agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发模式"><span class="nav-number">3.6.</span> <span class="nav-text">开发模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务注册与发现"><span class="nav-number">4.</span> <span class="nav-text">服务注册与发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务注册"><span class="nav-number">4.1.</span> <span class="nav-text">服务注册</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过Http-API注册"><span class="nav-number">4.1.1.</span> <span class="nav-text">通过Http API注册</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过配置文件注册文件"><span class="nav-number">4.1.2.</span> <span class="nav-text">通过配置文件注册文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务发现"><span class="nav-number">4.2.</span> <span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Http-API"><span class="nav-number">4.2.1.</span> <span class="nav-text">Http API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-API"><span class="nav-number">4.2.2.</span> <span class="nav-text">DNS API</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#健康检查"><span class="nav-number">5.</span> <span class="nav-text">健康检查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义检查"><span class="nav-number">5.1.</span> <span class="nav-text">自定义检查</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-V"><span class="nav-number">6.</span> <span class="nav-text">K/V</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">7.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">7.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Agent"><span class="nav-number">7.2.</span> <span class="nav-text">Agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#event"><span class="nav-number">7.3.</span> <span class="nav-text">event</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exec"><span class="nav-number">7.4.</span> <span class="nav-text">exec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join"><span class="nav-number">7.5.</span> <span class="nav-text">join</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leave"><span class="nav-number">7.6.</span> <span class="nav-text">leave</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#members"><span class="nav-number">7.7.</span> <span class="nav-text">members</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#monitor"><span class="nav-number">7.8.</span> <span class="nav-text">monitor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reload"><span class="nav-number">7.9.</span> <span class="nav-text">reload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch"><span class="nav-number">7.10.</span> <span class="nav-text">watch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Consul-配置"><span class="nav-number">8.</span> <span class="nav-text">Consul 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#详细的配置文件参数"><span class="nav-number">8.1.</span> <span class="nav-text">详细的配置文件参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">9.</span> <span class="nav-text">常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#agent"><span class="nav-number">9.1.</span> <span class="nav-text">agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#catalog"><span class="nav-number">9.2.</span> <span class="nav-text">catalog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#health"><span class="nav-number">9.3.</span> <span class="nav-text">health</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session"><span class="nav-number">9.4.</span> <span class="nav-text">session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#acl"><span class="nav-number">9.5.</span> <span class="nav-text">acl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#event-1"><span class="nav-number">9.6.</span> <span class="nav-text">event</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#status"><span class="nav-number">9.7.</span> <span class="nav-text">status</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高可用"><span class="nav-number">10.</span> <span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">11.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

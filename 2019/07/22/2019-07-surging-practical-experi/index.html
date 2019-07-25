@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="微服务,Surging,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="背景在去年9月份的时候,我入职一家做航空软件产品的公司。当时公司部门领导决定构建一个技术平台(或称为技术中台),通过该技术平台进而孵化各个业务系统。说白了就是需要通过一个分布式框架或是微服务框架提高应用系统的性能和并发处理能力、业务处理能力。当时现有的系统是在 .net framework平台上搭建的简单的单体应用，并不具备可用性、扩展性、易用性等。我在入职前也学习过一些微服务相关的知识,并通过搜">
+<meta name="keywords" content="微服务,Surging">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Surging实践经验">
+<meta property="og:url" content="https://liuhll.github.io/2019/07/22/2019-07-surging-practical-experi/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="背景在去年9月份的时候,我入职一家做航空软件产品的公司。当时公司部门领导决定构建一个技术平台(或称为技术中台),通过该技术平台进而孵化各个业务系统。说白了就是需要通过一个分布式框架或是微服务框架提高应用系统的性能和并发处理能力、业务处理能力。当时现有的系统是在 .net framework平台上搭建的简单的单体应用，并不具备可用性、扩展性、易用性等。我在入职前也学习过一些微服务相关的知识,并通过搜">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://liuhll.github.io/hexo-blog-deploy/2019/07/22/2019-07-surging-practical-experi/devops.png">
+<meta property="og:updated_time" content="2019-07-25T05:42:37.162Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Surging实践经验">
+<meta name="twitter:description" content="背景在去年9月份的时候,我入职一家做航空软件产品的公司。当时公司部门领导决定构建一个技术平台(或称为技术中台),通过该技术平台进而孵化各个业务系统。说白了就是需要通过一个分布式框架或是微服务框架提高应用系统的性能和并发处理能力、业务处理能力。当时现有的系统是在 .net framework平台上搭建的简单的单体应用，并不具备可用性、扩展性、易用性等。我在入职前也学习过一些微服务相关的知识,并通过搜">
+<meta name="twitter:image" content="https://liuhll.github.io/hexo-blog-deploy/2019/07/22/2019-07-surging-practical-experi/devops.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2019/07/22/2019-07-surging-practical-experi/">
+
+
+
+
+
+  <title>Surging实践经验 | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2019/07/22/2019-07-surging-practical-experi/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Surging实践经验</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-22T21:05:25+08:00">
+                2019-07-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-25T13:42:37+08:00">
+                2019-07-25
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在去年9月份的时候,我入职一家做航空软件产品的公司。当时公司部门领导决定构建一个技术平台(或称为技术中台),通过该技术平台进而孵化各个业务系统。说白了就是需要通过一个分布式框架或是微服务框架提高应用系统的性能和并发处理能力、业务处理能力。<br>当时现有的系统是在 .net framework平台上搭建的简单的单体应用，并不具备可用性、扩展性、易用性等。<br>我在入职前也学习过一些微服务相关的知识,并通过搜索引擎了解了.net平台下的一些微服务框架和分布式架构。在对比不同技术框架的背景后,我决定使用<a href="https://github.com/dotnetcore/surging" target="_blank" rel="noopener">surging</a>作为公司的技术平台。原因在于:</p>
+<ul>
+<li>Surging的设计思想和理念更符合微服务的架构思想,通过dotnetty框架实现的RPC通信,内置了服务治理保证通信的可靠性。</li>
+<li>通过向服务注册中心(Zookeeper、Consul)注册相关元数据来管理集群的服务命令、路由信息、缓存中间件等数据,服务注册不需要进行额外的处理</li>
+<li>Surging内置了负载均衡算法。</li>
+<li>Surging支持多种协议的通信方式,并且支持ws服务主机与一般服务(Http、TCP)主机之间直接通过RPC进行通信。</li>
+<li>服务之间的调用很方便,作者提供了基于<code>ServiceProxyProvider</code>、和基于<code>ServiceProxyFactory</code>的rpc调用方式,简单易用。</li>
+<li>模块化设计,很方便的对模块进行扩展。</li>
+<li>支持事件总线,通过消息对象实现的时效件纵向的适配可以实现发布订阅的交互模式。</li>
+<li>.net core 跨平台，性能更高。</li>
+</ul>
+<h1 id="架构维护"><a href="#架构维护" class="headerlink" title="架构维护"></a>架构维护</h1><p>由于作者一直在维护surging,而且我们也需要对surging的一些模块进行调整,也需要扩展一些surging的组件包,所以我们在使用surging的过程中是直接获取源代码后,在公司维护一份自己的源码，然后打包成nuget包,并发布到内部的nuget服务，通过内部的nuget对surging组件进行分发。<br>在获取surging源码后,我对surging进行了如下调整：</p>
+<ol>
+<li>根据公司要求,对名称空间和包名称进行了调整。</li>
+<li>对异常处理进行了重构</li>
+<li>将消息返回的数据结果名称重命名为Data,统一了消息返回码。</li>
+<li>修改了默认的json序列化器,默认使用camelCame风格</li>
+<li>重构了签发token的方法(使用jose-jwt组件)</li>
+<li>支持通过RpcContext设置token的payload和获取payload,通过扩展<code>RpcContextSession</code>获取运行时登录用户</li>
+<li>扩展了Dapper、Domain、Validation、Schedule(基于Quartz的分布式任务调度)等组件包</li>
+<li>swagger文档支持jwt token验证</li>
+<li>新增surging打包脚本等等</li>
+<li>现在surging的demo案例和内部的开发者文档</li>
+</ol>
+<p>如果你在使用surging的过程中,对surging源码较为熟悉,并希望对surging进行一定的调整、扩展自己公司的一些组件的时候,您可以通过社区获取surging的源代码,并在公司的代码库维护自己的分支。但是需要对作者对源码的修改要及时了解和熟悉。<br>nuget服务的搭建可以使用nuget官方提供的<a href="https://github.com/NuGet/NuGet.Server" target="_blank" rel="noopener">nuget.server</a>或是<a href="https://www.sonatype.com/nexus-repository-sonatype" target="_blank" rel="noopener">nexus</a> 。<br>对架构的维护可能是一个持续的和长久的过程,你可以通过企业内部的需求和作者对框架的调整对技术框架持续的进行调整和维护。在对surging进行调整维护后,就通过通过打包脚本进行打包发布到内部的nuget服务。</p>
+<h1 id="业务框架"><a href="#业务框架" class="headerlink" title="业务框架"></a>业务框架</h1><h2 id="构建微服务主机"><a href="#构建微服务主机" class="headerlink" title="构建微服务主机"></a>构建微服务主机</h2><p>由于在构建每个微服务主机的代码和配置文件都是一致的,无法就是对配置文件的一些配置项进行调整，所以可以将构建微服务主机的代码和配置文件抽象出来,统一放置在<code>Shared</code>目录中，再在项目文件中通过<code>import</code>进入即可。<br>如何将公共的脚本、配置文件、属性抽象出来,可以参考:<a href="https://github.com/surging-cloud/Surging.Hero/tree/develop/hero/src/Shared" target="_blank" rel="noopener">https://github.com/surging-cloud/Surging.Hero/tree/develop/hero/src/Shared</a> 。<br>如何构建主机呢?Surging通过<code>ServiceHostBuilder</code>来构建微服务主机,在构建主机过程中，可以添加一些服务组件或是指定相应的配置文件。构建主机的代码如下:<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> host = <span class="keyword">new</span> ServiceHostBuilder()</span><br><span class="line">                 .RegisterServices(builder =&gt;</span><br><span class="line">                 &#123;</span><br><span class="line">                     builder.AddMicroService(option =&gt;</span><br><span class="line">                      &#123;</span><br><span class="line">                          option.AddServiceRuntime()</span><br><span class="line">                           .AddClientProxy()</span><br><span class="line">                           .AddRelateServiceRuntime()</span><br><span class="line">                           .AddConfigurationWatch()</span><br><span class="line">                           .AddServiceEngine(<span class="keyword">typeof</span>(SurgingServiceEngine))</span><br><span class="line">                           ;</span><br><span class="line"></span><br><span class="line">                          builder.Register(p =&gt; <span class="keyword">new</span> CPlatformContainer(ServiceLocator.Current));</span><br><span class="line">                      &#125;);</span><br><span class="line">                 &#125;)</span><br><span class="line">                 .ConfigureLogging(loggging =&gt;</span><br><span class="line">                 &#123;</span><br><span class="line">                     loggging.AddConfiguration(</span><br><span class="line">                         AppConfig.GetSection(<span class="string">"Logging"</span>));</span><br><span class="line">                 &#125;)</span><br><span class="line">                 .UseServer(options =&gt; &#123; &#125;)</span><br><span class="line">                 .UseConsoleLifetime()</span><br><span class="line">                 .Configure(build =&gt;</span><br><span class="line">                 &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> DEBUG</span></span><br><span class="line">                     build.AddCacheFile(<span class="string">"$&#123;cachePath&#125;|/app/configs/cacheSettings.json"</span>, optional: <span class="literal">false</span>, reloadOnChange: <span class="literal">true</span>);</span><br><span class="line">                     build.AddCPlatformFile(<span class="string">"$&#123;surgingPath&#125;|/app/configs/surgingSettings.json"</span>, optional: <span class="literal">false</span>, reloadOnChange: <span class="literal">true</span>);</span><br><span class="line">                     build.AddEventBusFile(<span class="string">"$&#123;eventBusPath&#125;|/app/configs/eventBusSettings.json"</span>, optional: <span class="literal">false</span>);</span><br><span class="line">                     build.AddConsulFile(<span class="string">"$&#123;consulPath&#125;|/app/configs/consul.json"</span>, optional: <span class="literal">false</span>, reloadOnChange: <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">                    build.AddCacheFile(<span class="string">"$&#123;cachePath&#125;|configs/cacheSettings.json"</span>, optional: <span class="literal">false</span>, reloadOnChange: <span class="literal">true</span>);                      </span><br><span class="line">                    build.AddCPlatformFile(<span class="string">"$&#123;surgingPath&#125;|configs/surgingSettings.json"</span>, optional: <span class="literal">false</span>,reloadOnChange: <span class="literal">true</span>);                    </span><br><span class="line">                    build.AddEventBusFile(<span class="string">"configs/eventBusSettings.json"</span>, optional: <span class="literal">false</span>);</span><br><span class="line">                    build.AddConsulFile(<span class="string">"configs/consul.json"</span>, optional: <span class="literal">false</span>, reloadOnChange: <span class="literal">true</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">                 &#125;)</span><br><span class="line">                 .UseProxy()</span><br><span class="line">                 .UseStartup&lt;Startup&gt;()</span><br><span class="line">                 .Build();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">using</span> (host.Run())</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">$"服务主机启动成功<span class="subst">&#123;DateTime.Now&#125;</span>。"</span>);</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是可以通过<code>SurgingServiceEngine</code>来指定surging服务引擎扫描的业务组件的目录。以及也可以通过<code>Startup</code>注入相应的服务或是制定配置文件。</p>
+<h2 id="业务框架的分层"><a href="#业务框架的分层" class="headerlink" title="业务框架的分层"></a>业务框架的分层</h2><p>一般地,我会将每个微服务组件分为如下几层:</p>
+<h3 id="1-Host"><a href="#1-Host" class="headerlink" title="1. Host"></a>1. Host</h3><p>用于构建微服务主机和服务寄宿,一般我会直接引用Application层,托管应用服务本身。</p>
+<h3 id="2-IApplication-应用接口层"><a href="#2-IApplication-应用接口层" class="headerlink" title="2. IApplication 应用接口层"></a>2. IApplication 应用接口层</h3><ul>
+<li>用于定义应用接口,每个应用接口都应当继承<code>IServiceKey</code>,Surging通过应用接口生成服务条目(<code>ServiceEntry</code>)</li>
+<li>使用<code>ServiceBundle</code>特性来标识路由模板。</li>
+<li>可以使用<code>ServiceCommand</code>来对Action进行注解,该元数据会被注册到服务注册中心,在RPC通信过程中，通过<code>ServiceCommand</code>注解的元数据实现服务治理。该特性可不需要配置,可以通过<code>SurgingSettings.json</code>统一指定相关的配置,如果配置了<code>ServiceCommand</code>特性,会优先选择特性指定的配置值。</li>
+<li>可以通过<code>Service</code>特性指定Action的一些元数据。</li>
+<li>应用接口层除了定义应用接口之外,还需要定义相关的DTO对象。</li>
+<li>应用接口层可以被其他微服务组件应用或是通过nuget进行分发,通过<code>IServiceProxyFactory</code>创建应用接口的代理,从而实现RPC通信。</li>
+</ul>
+<h3 id="3-Application-应用层"><a href="#3-Application-应用层" class="headerlink" title="3. Application 应用层"></a>3. Application 应用层</h3><ul>
+<li>应用层主要是实现业务流程和输入输出判断，不实现复杂的业务逻辑</li>
+<li>应用层的应用需要实现应用接口定义的接口,并继承<code>ProxyServiceBase</code>,基类<code>ProxyServiceBase</code>提供了一些通用的方法。</li>
+</ul>
+<h3 id="4-Domain-领域层"><a href="#4-Domain-领域层" class="headerlink" title="4. Domain 领域层"></a>4. Domain 领域层</h3><ul>
+<li>领域层主要是实现具体的业务逻辑</li>
+</ul>
+<h3 id="5-Domian-Shared"><a href="#5-Domian-Shared" class="headerlink" title="5. Domian.Shared"></a>5. Domian.Shared</h3><ul>
+<li>定义微服务组件通用的值类型(model或是枚举类型),可被其他微服务组件引用</li>
+</ul>
+<h1 id="容器化服务和服务编排"><a href="#容器化服务和服务编排" class="headerlink" title="容器化服务和服务编排"></a>容器化服务和服务编排</h1><h2 id="服务容器化"><a href="#服务容器化" class="headerlink" title="服务容器化"></a>服务容器化</h2><p>docker是一款优秀的容器引擎产品。将服务容器化,能够最大化的发挥微服务的体验性。能够让开发者感受到docker构建一次,处处运行的魅力所在。所以我强烈推荐在开发过程中,使用docker容器化服务组件,使用docker-compose编排微服务组件。<br>vs对docker-compose进行开发调试提供了非常友好的体验性。<br>一般地,会在服务组件的Host层提供Dockerfile用于构建docker镜像。如下的dockerfile提供了微服务组件的编译、构建等过程。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> microsoft/dotnet:<span class="number">2.2</span>.<span class="number">0</span>-runtime AS base</span><br><span class="line"><span class="keyword">WORKDIR</span> /app</span><br><span class="line">ARG rpc_port=100</span><br><span class="line">ARG http_port=8080</span><br><span class="line">ARG ws_port=96</span><br><span class="line">ENV TZ=Asia/Shanghai </span><br><span class="line">RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime &amp;&amp; echo $TZ &gt; /etc/timezone </span><br><span class="line">EXPOSE $&#123;rpc_port&#125; $&#123;http_port&#125; $&#123;ws_port&#125;</span><br><span class="line"></span><br><span class="line">FROM microsoft/dotnet:2.2-sdk AS build</span><br><span class="line">WORKDIR /src</span><br><span class="line">COPY . .</span><br><span class="line">ARG sln_name</span><br><span class="line">RUN dotnet restore $&#123;sln_name&#125; &amp;&amp; \</span><br><span class="line">    dotnet build --no-restore -c Release $&#123;sln_name&#125;</span><br><span class="line"></span><br><span class="line">FROM build AS publish</span><br><span class="line">ARG host_workdir</span><br><span class="line">WORKDIR $&#123;host_workdir&#125;</span><br><span class="line">RUN dotnet publish --no-restore -c Release -o /app</span><br><span class="line"></span><br><span class="line">FROM base AS final</span><br><span class="line">ARG host_name</span><br><span class="line">ENV host_name=$&#123;host_name&#125;</span><br><span class="line">COPY --from=publish /app .</span><br><span class="line">ENTRYPOINT dotnet $&#123;host_name&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="服务编排"><a href="#服务编排" class="headerlink" title="服务编排"></a>服务编排</h2><p>使用docker-compose编排微服务组件,一般的,使用<code>docker-compose.yml</code>定义镜像构建的上下文、指定网络、镜像名称、挂载的目录等，通过<code>docker-compose.override.yml</code>来指定配置文件的环境变量，<code>.env</code>来设置环境变量的值,通过<code>docker-compose.vs.debug.yml</code>来指定调试过程中的相关设置(部署中可不指定该编排文件)。</p>
+<p>需要注意的是,surging在开发过程中,基础服务也通过docker-compose来编排和启动,且必须在开发和调试前启动基础服务。基础服务和surging服务组件指定的网络必须同一个。</p>
+<p>基础服务编排如下所示：<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.7'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  consul:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">consul:latest</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8400:8400"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8500:8500"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8600:8600"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8600:8600/udp"</span></span><br><span class="line"><span class="attr">    command:</span> <span class="string">"agent -server -bootstrap-expect 1 -ui -client 0.0.0.0"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">surging_hero_service_net</span></span><br><span class="line"><span class="attr">  redis:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">redis:latest</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"6379:6379"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">surging_hero_service_net</span></span><br><span class="line"><span class="attr">  rabbitmq:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">rabbitmq:management</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      RABBITMQ_ERLANG_COOKIE:</span> <span class="string">"SWQOKODSQALRPCLNMEQG"</span></span><br><span class="line"><span class="attr">      RABBITMQ_DEFAULT_USER:</span> <span class="string">"rabbitmq"</span></span><br><span class="line"><span class="attr">      RABBITMQ_DEFAULT_PASS:</span> <span class="string">"rabbitmq"</span></span><br><span class="line"><span class="attr">      RABBITMQ_DEFAULT_VHOST:</span> <span class="string">"/"</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"15672:15672"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"5672:5672"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">surging_hero_service_net</span></span><br><span class="line">      </span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  surging_hero_service_net:</span> </span><br><span class="line"><span class="attr">    driver:</span> <span class="string">bridge</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">surging_hero_service_net</span></span><br><span class="line"><span class="attr">    ipam:</span></span><br><span class="line"><span class="attr">      driver:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">      config:</span></span><br><span class="line"><span class="attr">      - subnet:</span> <span class="number">172.22</span><span class="number">.0</span><span class="number">.1</span><span class="string">/16</span></span><br></pre></td></tr></table></figure></p>
+<p>由于开发过程中的基础服务并没有考虑到高可用,在生产环境中建议基础服务集群化。</p>
+<p>微服务组件的编排请参考: <a href="https://github.com/surging-cloud/Surging.Hero/tree/develop/hero/docker-compose/surging.hero" target="_blank" rel="noopener">https://github.com/surging-cloud/Surging.Hero/tree/develop/hero/docker-compose/surging.hero</a></p>
+<h2 id="开发与调试"><a href="#开发与调试" class="headerlink" title="开发与调试"></a>开发与调试</h2><p>其实在开发过程中,由于业务模块的不同，责任人不同,开发团队不同，开发者拥有的权限不同,业务模块的代码有可能放到不同的git仓库。建议将微服务服务组件的应用接口层和Domian.Shared可以发布的企业内部的nuget服务。其他微服务组件可以通过nuget服务引用应用接口层和Domian.Shared组件。<br>如果源代码都放到一个git仓库中,也可以建立多个解决方案或是docker-compose编排文件项目来编排不同的服务，方便开发和调试。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p>首次使用docker-compose进行调试服务时,由于vs会从网络上下载<code>vsdbg</code>组件,由于网络原因,一般都会比较慢,开发者可以从其他同事的电脑的家目录下拷贝<code>vsdbg</code>到本机,重新打开vs,然后再进行调试。</p>
+<h1 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h1><h2 id="业务流程"><a href="#业务流程" class="headerlink" title="业务流程"></a>业务流程</h2><p>在开发过程中,我们使用Jenkins实现持续集成和部署。整个流程如下所述:</p>
+<ol>
+<li>开发者编写业务代码或修复完bug后,提交代码,push到远程仓库,并发起pr请求,请求合并到develop分支。</li>
+<li>当代码审核通过后,合并到develop分支后,通过设置<code>gitlab</code>或是<code>gitee</code>的<code>webhook</code>，触发jenkins执行构建。或是通过设置Jenkins的定时任务检测代码库变化,当代码库变化后,jenkins获取最新代码,执行构建操作(由于当时我们Jenkins部署的环境是内网,gitee无法访问公司内网,所以无法设置webhook)</li>
+<li>Jenkins通过预先设置好的命令和脚本执行构建打包程序。本质上是执行<code>docker-compose build</code>打包docker镜像,当完成构建和打包docker镜像后,然后将镜像推送到企业内部的docker镜像仓库。</li>
+<li>之后,jenkins通过Jenkins SSH插件将部署脚本拷贝到k8集群的master节点,通过ssh插件在k8s master节点执行部署命令。完成后,微服务集群将自动部署到指定的k8s集群中。</li>
+</ol>
+<p>整个devops流程如下所述(但是我们没有与钉钉做集成):<br><img src="/hexo-blog-deploy/2019/07/22/2019-07-surging-practical-experi/devops.png" alt="devops"></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>企业内部的docker仓库除了可以使用<code>harbor</code>搭建之外,还可以使用<code>nexus</code>。推荐使用<code>nexus</code>作为仓库管理服务，因为<code>nexus</code>除了支持docker镜像仓库之外,还支持nuget包、npm等格式的包管理。</li>
+<li>建议企业内部在构建业务平台时,根据业务模块划分主题,一个主题对应一个数据库,一个git仓库,一个项目组,多个相关的微服务组件，一个Jenkins构建项目。每个主题独立的进行持续集成与部署。</li>
+<li>建议基础服务consul、rabbitmq、redis考虑集群。</li>
+</ol>
+<h1 id="产品交付和部署"><a href="#产品交付和部署" class="headerlink" title="产品交付和部署"></a>产品交付和部署</h1><ol>
+<li>一般的，我们通过docker镜像完成产品交付与部署。可以通过编写部署脚本在k8s集群或是通过rancher进行部署。</li>
+<li>可以使用k8s或是rancher提供的Dashborad进行容器和服务的监控和管理。</li>
+</ol>
+<h1 id="体会"><a href="#体会" class="headerlink" title="体会"></a>体会</h1><ol>
+<li>surging的设计思想是无疑正确的。相比于市面上其他的.net微服务框架或是分布式框架,无论是服务治理还是内部通信机制,服务引擎设置，主机寄宿均有独到之处。(abp vnext的微服务框架通过内部网关Ocelot进行通信,完全违反的去中心化设计，而且性能也相对较差的多)</li>
+<li>在使用surging的过程中,也遇到了一些问题或是bug(例如:1.首次访问性能较差；2.服务实例无法支持同时扩展),在反馈到github社区或是请求作者协助,都能够得到及时反馈。目前作者已经即将完成对surging2.0的开发，相信会有更优秀的体验。</li>
+<li>在开发和测试、部署和产品交付中推荐将服务容器化，推荐使用linux作为部署服务器。</li>
+</ol>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><ul>
+<li>如果你对surging感兴趣,可以在github上对<a href="https://github.com/dotnetcore/surging" target="_blank" rel="noopener">surging</a>关注。</li>
+<li>如果你对如何使用surging落地开发，您可以在github上关注<a href="https://github.com/surging-cloud" target="_blank" rel="noopener">surging.hero</a>。<ul>
+<li>surging.hero是一个使用surging作为开发框架的权限管理平台。目前项目刚刚开始,欢迎各位开发者加入,如果您想加入surging.hero的开发或是愿意为surging的生态做出贡献,欢迎加入<code>surging-cloud</code>社区。</li>
+<li>如果你希望加入<code>surging-cloud</code>社区，可以将你的github账号通过email到:<a href="mailto:1029765111@qq.com" target="_blank" rel="noopener">1029765111@qq.com</a>,并备注`申请加入 <strong>surging-cloud社区</strong> 即可。</li>
+<li>如果您对surging.hero感兴趣并希望加入surging.hero的开发,也可以申请加入qq群:<code>713943626</code>。</li>
+</ul>
+</li>
+<li>如果大家对surging确实感兴趣,后期我有时间的话,可以写一些我使用surging的经验或是对源码的理解。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/hexo-blog-deploy/tags/Surging/" rel="tag"># Surging</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2019/04/15/2019-04-linux-shell-flowcontrol/" rel="next" title="条件测试操作与流程控制语句">
+                <i class="fa fa-chevron-left"></i> 条件测试操作与流程控制语句
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2019/07/25/2019-07-dev-tools-recommend/" rel="prev" title="开发者工具推荐">
+                开发者工具推荐 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#架构维护"><span class="nav-number">2.</span> <span class="nav-text">架构维护</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#业务框架"><span class="nav-number">3.</span> <span class="nav-text">业务框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构建微服务主机"><span class="nav-number">3.1.</span> <span class="nav-text">构建微服务主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务框架的分层"><span class="nav-number">3.2.</span> <span class="nav-text">业务框架的分层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Host"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. Host</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-IApplication-应用接口层"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. IApplication 应用接口层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Application-应用层"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. Application 应用层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Domain-领域层"><span class="nav-number">3.2.4.</span> <span class="nav-text">4. Domain 领域层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Domian-Shared"><span class="nav-number">3.2.5.</span> <span class="nav-text">5. Domian.Shared</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器化服务和服务编排"><span class="nav-number">4.</span> <span class="nav-text">容器化服务和服务编排</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务容器化"><span class="nav-number">4.1.</span> <span class="nav-text">服务容器化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务编排"><span class="nav-number">4.2.</span> <span class="nav-text">服务编排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发与调试"><span class="nav-number">4.3.</span> <span class="nav-text">开发与调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">4.4.</span> <span class="nav-text">常见问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Devops"><span class="nav-number">5.</span> <span class="nav-text">Devops</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#业务流程"><span class="nav-number">5.1.</span> <span class="nav-text">业务流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">5.2.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#产品交付和部署"><span class="nav-number">6.</span> <span class="nav-text">产品交付和部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#体会"><span class="nav-number">7.</span> <span class="nav-text">体会</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后"><span class="nav-number">8.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

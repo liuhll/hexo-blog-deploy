@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/hexo-blog-deploy/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/hexo-blog-deploy/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/hexo-blog-deploy/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog-deploy/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/hexo-blog-deploy/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="微服务,开源框架,Surging,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog-deploy/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="建立微服务项目一般地，我们通过DDD领域设计来构建一个微服务组件。在开发过程中，我们可以单独为某个微服务组件建立解决方案，针对某个微服务进行独立的开发;但是更多的场景是将多个互相依赖的微服务建立为同一个解决方案，然后通过docker-compose进行编排微服务，方便业务开发和调试。 当然，除此之外，也可以通过普通的三层或是CQRS模式来构建微服务,这里不展开讨论。 建立微服务项目(组件)根据领域">
+<meta name="keywords" content="微服务,开源框架,Surging">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务框架Surging之创建微服务项目">
+<meta property="og:url" content="https://liuhll.github.io/2018/11/05/2018-11-surging-setup-microservice/index.html">
+<meta property="og:site_name" content="Liuhl&#39;Notes">
+<meta property="og:description" content="建立微服务项目一般地，我们通过DDD领域设计来构建一个微服务组件。在开发过程中，我们可以单独为某个微服务组件建立解决方案，针对某个微服务进行独立的开发;但是更多的场景是将多个互相依赖的微服务建立为同一个解决方案，然后通过docker-compose进行编排微服务，方便业务开发和调试。 当然，除此之外，也可以通过普通的三层或是CQRS模式来构建微服务,这里不展开讨论。 建立微服务项目(组件)根据领域">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://liuhll.github.io/hexo-blog-deploy/2018/11/05/2018-11-surging-setup-microservice/sln-structure.png">
+<meta property="og:image" content="https://liuhll.github.io/hexo-blog-deploy/2018/11/05/2018-11-surging-setup-microservice/single.micoservice.structure.png">
+<meta property="og:updated_time" content="2019-07-22T03:41:41.100Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务框架Surging之创建微服务项目">
+<meta name="twitter:description" content="建立微服务项目一般地，我们通过DDD领域设计来构建一个微服务组件。在开发过程中，我们可以单独为某个微服务组件建立解决方案，针对某个微服务进行独立的开发;但是更多的场景是将多个互相依赖的微服务建立为同一个解决方案，然后通过docker-compose进行编排微服务，方便业务开发和调试。 当然，除此之外，也可以通过普通的三层或是CQRS模式来构建微服务,这里不展开讨论。 建立微服务项目(组件)根据领域">
+<meta name="twitter:image" content="https://liuhll.github.io/hexo-blog-deploy/2018/11/05/2018-11-surging-setup-microservice/sln-structure.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo-blog-deploy/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuhll.github.io/2018/11/05/2018-11-surging-setup-microservice/">
+
+
+
+
+
+  <title>微服务框架Surging之创建微服务项目 | Liuhl'Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo-blog-deploy/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liuhl'Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">懒虫的世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog-deploy/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexo-blog-deploy/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog-deploy/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog-deploy/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexo-blog-deploy/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuhll.github.io/hexo-blog-deploy/2018/11/05/2018-11-surging-setup-microservice/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liuhl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/hexo-blog-deploy/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liuhl'Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">微服务框架Surging之创建微服务项目</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T20:46:10+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-22T11:41:41+08:00">
+                2019-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/hexo-blog-deploy/categories/微服务/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="建立微服务项目"><a href="#建立微服务项目" class="headerlink" title="建立微服务项目"></a>建立微服务项目</h1><p>一般地，我们通过DDD领域设计来构建一个微服务组件。在开发过程中，我们可以单独为某个微服务组件建立解决方案，针对某个微服务进行独立的开发;但是更多的场景是将多个互相依赖的微服务建立为同一个解决方案，然后通过<code>docker-compose</code>进行编排微服务，方便业务开发和调试。</p>
+<p>当然，除此之外，也可以通过普通的三层或是CQRS模式来构建微服务,这里不展开讨论。</p>
+<h2 id="建立微服务项目-组件"><a href="#建立微服务项目-组件" class="headerlink" title="建立微服务项目(组件)"></a>建立微服务项目(组件)</h2><p>根据领域设计架构模型，我们一般将微服务组件分为如下四层:</p>
+<ol>
+<li><strong>Host Layer</strong>: 主机服务层, 该层主要是用于寄宿(托管)微服务主机,在该层构建、配置和微服务微服务主机本身。</li>
+<li><strong>IApplication Layer</strong>：应用接口层， 该层主要定义微服务组件的<strong>服务</strong>和<strong>命令</strong>(概念类似于MVC中的<code>Controller</code>和<code>Action</code>的概念),并通过特性来标识服务与命令的相关属性(更多知识点，请参考<a href="#">配置</a>)。除此之外,每个服务对应的<code>DTO</code>对象，也在该层定义。</li>
+<li><strong>Application Layer</strong>: 应用层, 很薄的一层，<code>IApplication</code>的实现层,只包含工作流控制逻辑，不包含业务逻辑。</li>
+<li><strong>Domain Layer</strong>: 领域层,包含整个应用的所有业务逻辑。</li>
+</ol>
+<p>当然，除了上述的四层之外，一般领域设计还可能包含: </p>
+<ol start="5">
+<li><strong>Infrastructure Layer</strong>: 基础设施层, 提供整个应用的基础服务；</li>
+<li><strong>ORM Layer</strong>: 数据访问层, 提供统一的仓储接口和对数据库的访问；</li>
+</ol>
+<p>一般地，在一个产品(解决方案)中，我们会将基础设施层和数据访问层抽象出来，每个微服务组件只需要关注微服务自身的业务。除此之外，一个产品(解决方案)中,还会抽象出: </p>
+<ol start="7">
+<li><strong>公共的业务组件</strong>(相当于公共的领域层): 用于封装产品的通用业务。</li>
+<li><strong>公共的Model组件</strong>: 用于封装通用的值对象、枚举等。</li>
+</ol>
+<p>一个通用的产品的解决方案结构应当如下图所示,其中,Services目录下为该解决方案(产品)的所有微服务组件:</p>
+<p><img src="/hexo-blog-deploy/2018/11/05/2018-11-surging-setup-microservice/sln-structure.png" alt="项目结构"></p>
+<p>如果一个微服务组件作为一个单一的项目在开发，只需要定义 1~4 层即可,我们通过 Nuget 服务来安装使用到的组件包,换句话说，每个微服务只需要关注微服务自身的业务，而不需要关注除了本身之外的知识点,每个微服务组件的开发都应当满足：<strong>高内聚、低耦合</strong>的编程理念。</p>
+<p>一般情况下，在开发过程中，往往一个大的产品可能会被分解为多个模块进行开发，相应的，一个模块会对应着一个解决方案，在这个解决方案内部定义了该模块的微服务组件，往往这些微服务组件具有较强的依赖关系，配合着完成该模块的业务，在这种场景下，微服务之间的通信建议采用通过接口代理的方式进行通信;而不同的模块之间的微服务之间通信，往往采用RPC的方式进行通信。更多内容,请参考<a href="#">微服务通信方式</a>一节。</p>
+<p>单个微服务组件的项目结构:</p>
+<p><img src="/hexo-blog-deploy/2018/11/05/2018-11-surging-setup-microservice/single.micoservice.structure.png" alt="单个微服务的项目结构"></p>
+<blockquote>
+<p>Notes:</p>
+<ul>
+<li>在开发过程中,我们应当把用于websocket通知的服务组件单独抽象出来。</li>
+</ul>
+</blockquote>
+<h2 id="构建微服务主机"><a href="#构建微服务主机" class="headerlink" title="构建微服务主机"></a>构建微服务主机</h2><p>在建立完项目后，下一步并开始着手构建微服务主机。Surging使用<code>ServiceHostBuilder</code>构建微服务主机, 在微服务主机构建完成后，执行 <code>Run()</code>方法。下面通过实例来描述如何构建微服务主机:</p>
+<h3 id="安装Surging组件包"><a href="#安装Surging组件包" class="headerlink" title="安装Surging组件包"></a>安装Surging组件包</h3><p>在安装Surging组件包之前，首先需要配置内网的Nuget服务,内网的Nuget仓储地址为: <code>http://192.168.0.202/nuget</code>。</p>
+<ol>
+<li><p>一般情况下，以下组件包是必须安装的：<code>Surging.Core.CPlatform</code>、<code>Surging.Core.Common</code>、<code>Surging.Core.DotNetty</code>、<code>Surging.Core.Caching</code>;</p>
+</li>
+<li><p>如果选择Consul作为服务注册中心,需要安装: <code>Surging.Core.Consul</code>组件包; 如果选择Zookeeper作为服务注册中心,则需要安装: <code>Surging.Core.Zookeeper</code>组件包;</p>
+</li>
+<li><p>如果选择NLog作为日志记录组件，需要安装: <code>Surging.Core.NLog</code>组件包,如果选择log4net作为日志记录组件,则需要安装: <code>Surging.Core.Log4net</code>组件;</p>
+</li>
+<li><p>如果微服务组件需要对外提供Http服务，则需要安装<code>Surging.Core.KestrelHttpServer</code>组件包。一般情况下，如果微服务组件提供Http服务，则需要通过Swagger生成在线API文档，需要安装<code>Surging.Core.Swagger</code>组件包。</p>
+</li>
+<li><p>如果微服务主机作为 <code>WebSocket</code>服务主机，则需要安装<code>Surging.Core.Protocol.WS</code>组件包。</p>
+</li>
+<li><p>编码器的选择: Surging默认使用Json格式作为消息序列化格式,性能无法达到最优,所以Surging提供了<code>Surging.Core.Codec.MessagePack</code>和<code>Surging.Core.Codec.ProtoBuffer</code>组件包作为消息序列化的编解码器,以提高性能，可以根据实际情况选择合适的消息编解码器。</p>
+</li>
+</ol>
+<h3 id="编写配置文件"><a href="#编写配置文件" class="headerlink" title="编写配置文件"></a>编写配置文件</h3><p>Surging架构采用Json格式编写配置文件，配置文件可以分为如下几类：</p>
+<ol>
+<li>Surging平台配置文件:<code>surgingSettings.json</code>, 主要针对微服务主机自身的Ip、端口号、通信采用的协议、加载的模块，以及Swagger文档，日志输出级别进行配置。</li>
+<li>服务注册中心配置文件: <code>consul.json</code>或<code>zookeeper.json</code>，主要针对微服务的注册中心进行配置。</li>
+<li>消息中间件配置文件: <code>eventBusSettings.json</code>，针对微服务内部之间采用事件总线的中间件进行配置。</li>
+<li>缓存中间件配置文件: <code>cacheSettings.json</code>，针对微服务采用的缓存中间件进行配置。</li>
+<li>日志配置文件: <code>NLog.config</code>或<code>log4net.config</code>，日志配置文件按NLog 或 log4net组件的要求进行配置即可。</li>
+</ol>
+<p>配置文件的模板可以通过<a href="https://gitee.com/GFCM/Surging.Core/tree/develop/src/Sample/Services/DigitalReleaseEval/Surging.Demo.DigitalReleaseEvalHost/Configs" target="_blank" rel="noopener">Surging的案例</a>进行拷贝,针对微服务配置的相关知识，请参考<a href="#">配置</a>一节。</p>
+<h3 id="微服务主机类型"><a href="#微服务主机类型" class="headerlink" title="微服务主机类型"></a>微服务主机类型</h3><p>微服务主机的构建过程基本差不多，只是因为加载的模块不同(通过<code>surgingSettings.json</code>配置文档中的<code>Packages</code>节点)具有提供不同服务的能力，我们可以将微服务分为如下几种类型:</p>
+<ol>
+<li><p>业务微服务主机： 该类型的微服务主机不对外提供服务，只针对微服务内部集群提供服务,只要微服务主机注册到服务中心后,其他微服务主机可以通过接口代理或是RPC远程调用该主机的提供的接口。</p>
+</li>
+<li><p>对外提供Http服务的微服务主机: 对客户端提供Http访问的能力,与第一类主机基本一致,只需要针对配置<code>surgingSettings.json</code>配置<code>Ports.HttpPort</code>端口号,并且在<code>Packages</code>节点下的<code>EnginePartModule</code>增加对<code>KestrelHttpModule</code>引用,如果需要生产Swagger文档,则需要安装<code>Surging.Core.Swagger</code>组件,并在<code>surgingSettings.json</code>中对<code>Swagger</code>节点进行配置。</p>
+</li>
+<li><p>WebSocket服务的微服务主机: 针对客户端提供websocket服务,该类型的主机在构建过程与第一类主机一致,但是必须要安装<code>Surging.Core.Protocol.WS</code>组件包，并且需要针对配置<code>surgingSettings.json</code>配置<code>Ports.WSPort</code>端口号，并且在<code>Packages</code>节点下的<code>EnginePartModule</code>增加对<code>WSProtocolModule</code>引用,需要注意的是：</p>
+<ul>
+<li>实现服务接口时,应用层需要继承的基类是<code>WSServiceBase</code>;</li>
+<li>与ws服务之间的调用只能通过RPC的方式调用，不支持通过接口创建代理远程调用;</li>
+</ul>
+</li>
+<li><p>定时任务调度的微服务主机: 暂未实现</p>
+</li>
+</ol>
+<p>构建微服务主机的代码如下:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> host = <span class="keyword">new</span> ServiceHostBuilder()</span><br><span class="line">                .RegisterServices(builder =&gt;</span><br><span class="line">                &#123; <span class="comment">// 注册服务</span></span><br><span class="line">                    builder.AddMicroService(option =&gt;</span><br><span class="line">                    &#123; <span class="comment">// 增加微服务</span></span><br><span class="line">                        option.AddServiceRuntime() <span class="comment">// 增加服务运行时必要的组件</span></span><br><span class="line">                        .AddRelateServiceRuntime() <span class="comment">// 增加关联服务运行时必要的组件,如健康检查组件、地址选择器、远程调用服务组件等等</span></span><br><span class="line">                        .AddClientProxy() <span class="comment">// 如果需要支持通过接口代理进行其他微服务,则必须添加                        </span></span><br><span class="line">                        .AddServiceEngine(<span class="keyword">typeof</span>(SurgingServiceEngine));<span class="comment">// 指定服务引擎,用于解析微服务的服务与命令</span></span><br><span class="line"></span><br><span class="line">                        builder.Register(p =&gt; <span class="keyword">new</span> CPlatformContainer(ServiceLocator.Current));</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;)</span><br><span class="line">                .ConfigureLogging(loggging =&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    loggging.AddConfiguration(</span><br><span class="line">                        AppConfig.GetSection(<span class="string">"Logging"</span>));</span><br><span class="line">                &#125;)</span><br><span class="line">               <span class="comment">// .UseNLog("NLog.config") // 指定日志中间件，可以不显示指明,直接在surgingSettings中进行配置日志组件即可</span></span><br><span class="line">                .UseServer(options =&gt; &#123; &#125;)</span><br><span class="line">                .UseConsoleLifetime() <span class="comment">// 指定控制台输出日志</span></span><br><span class="line">                .Configure(build =&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">// 指定配置文件</span></span><br><span class="line">                    build.AddCacheFile(<span class="string">"$&#123;cachepath&#125;|Configs/cacheSettings.json"</span>, optional: <span class="literal">false</span>, reloadOnChange: <span class="literal">true</span>);</span><br><span class="line">                    build.AddCPlatformFile(<span class="string">"$&#123;surgingpath&#125;|Configs/surgingSettings.json"</span>, optional: <span class="literal">false</span>, reloadOnChange: <span class="literal">true</span>);</span><br><span class="line">                    build.AddEventBusFile(<span class="string">"Configs/eventBusSettings.json"</span>, optional: <span class="literal">false</span>);</span><br><span class="line">                    build.AddConsulFile(<span class="string">"Configs/consul.json"</span>, optional: <span class="literal">false</span>, reloadOnChange: <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">                &#125;)</span><br><span class="line">                .UseProxy() <span class="comment">// 声明可以使用接口代理方式访问服务</span></span><br><span class="line">                .UseStartup&lt;Startup&gt;() <span class="comment">//指定启动类</span></span><br><span class="line">                .Build(); <span class="comment">//构建微服务主机</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">using</span> (host.Run())</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">$"服务端启动成功，<span class="subst">&#123;DateTime.Now&#125;</span>。"</span>);</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>在构建过程中，需要指定<code>SurgingServiceEngine</code>用于解析服务组件,Surging采用<strong>Sidecar模式</strong>设计,如果未显示的引用应用组件,微服务可以通过服务引擎在指定的目录下扫描相应的dll，从而解析到相应的服务与命令。</li>
+<li>必须指定<code>Startup</code>类。</li>
+<li>需要注意的是注意<code>Configs</code>目录的大小写,Windows系统对目录的大小写不敏感,而Linux系统对大小写是敏感的。</li>
+</ol>
+<h2 id="编写Dockerfile"><a href="#编写Dockerfile" class="headerlink" title="编写Dockerfile"></a>编写Dockerfile</h2><p>如果需要使用docker-compose或k8s来编排微服务，则必须要构建微服务的镜像,可以通过如下脚本来构建微服务组件的Docker镜像。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> microsoft/dotnet:<span class="number">2.1</span>-runtime AS base</span><br><span class="line"><span class="keyword">WORKDIR</span> /app</span><br><span class="line">ARG rpc_port=100</span><br><span class="line">ARG http_port=8080</span><br><span class="line">ARG ws_port=96</span><br><span class="line">EXPOSE $&#123;rpc_port&#125; $&#123;http_port&#125; $&#123;ws_port&#125;</span><br><span class="line"></span><br><span class="line">FROM microsoft/dotnet:2.1-sdk AS build</span><br><span class="line">WORKDIR /src</span><br><span class="line">COPY . .</span><br><span class="line">WORKDIR &lt;micro_service_project_path&gt;</span><br><span class="line">RUN dotnet restore &amp;&amp; \</span><br><span class="line">    dotnet build --no-restore -c Release -o /app</span><br><span class="line"></span><br><span class="line">FROM build AS publish</span><br><span class="line">RUN dotnet publish --no-restore -c Release -o /app</span><br><span class="line"></span><br><span class="line">FROM base AS final</span><br><span class="line">WORKDIR /app</span><br><span class="line">COPY --from=publish /app .</span><br><span class="line">ENTRYPOINT ["dotnet", "&lt;micro_service_name.dll&gt;"]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog-deploy/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/hexo-blog-deploy/tags/开源框架/" rel="tag"># 开源框架</a>
+          
+            <a href="/hexo-blog-deploy/tags/Surging/" rel="tag"># Surging</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/11/04/2018-11-design-pattern-facade-pattern-note/" rel="next" title="设计模式之外观模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之外观模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog-deploy/2018/11/05/2018-11-surging-orchestration-microservice/" rel="prev" title="微服务框架Surging之编排微服务">
+                微服务框架Surging之编排微服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/hexo-blog-deploy/images/avatar.jpg" alt="Liuhl">
+          <p class="site-author-name" itemprop="name">Liuhl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/hexo-blog-deploy/archives/">
+                <span class="site-state-item-count">117</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/hexo-blog-deploy/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog-deploy/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuhll" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      github
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#建立微服务项目"><span class="nav-number">1.</span> <span class="nav-text">建立微服务项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立微服务项目-组件"><span class="nav-number">1.1.</span> <span class="nav-text">建立微服务项目(组件)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建微服务主机"><span class="nav-number">1.2.</span> <span class="nav-text">构建微服务主机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Surging组件包"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装Surging组件包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写配置文件"><span class="nav-number">1.2.2.</span> <span class="nav-text">编写配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微服务主机类型"><span class="nav-number">1.2.3.</span> <span class="nav-text">微服务主机类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写Dockerfile"><span class="nav-number">1.3.</span> <span class="nav-text">编写Dockerfile</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liuhl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/hexo-blog-deploy/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/hexo-blog-deploy/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/hexo-blog-deploy/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>
